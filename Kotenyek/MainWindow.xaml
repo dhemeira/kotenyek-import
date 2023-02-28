@@ -1,0 +1,67 @@
+﻿<Window x:Class="Kotenyek.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Kotenyek"
+        xmlns:view="clr-namespace:Kotenyek.View"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        d:DataContext="{d:DesignInstance Type=view:MainView}"
+        mc:Ignorable="d"
+        Title="Termék feltöltés - KÖTÉNYEK.hu" Width="640" Height="540" MinHeight="540" MinWidth="640">
+    <DockPanel LastChildFill="False" Margin="20">
+        <StackPanel DockPanel.Dock="Top" Orientation="Vertical">
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <Label Content="Név:" Width="130" Margin="0 0 16 0"/>
+                <TextBox Width="300" x:Name="productName" VerticalContentAlignment="Center" IsReadOnly="False"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <Label Content="Leírás:" Width="130" Margin="0 0 16 0"/>
+                <TextBox Width="300" x:Name="productShortDescription" VerticalContentAlignment="Center" IsReadOnly="False"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <Label Content="Mosási útmutató:" Width="130" Margin="0 0 16 0"/>
+                <TextBox Width="300" x:Name="productDescription" VerticalContentAlignment="Center" IsReadOnly="False"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <Label Content="Hossz:" Width="130" Margin="0 0 16 0"/>
+                <TextBox Width="300" x:Name="productLength" VerticalContentAlignment="Center" IsReadOnly="False"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <Label Content="Szélesség:" Width="130" Margin="0 0 16 0"/>
+                <TextBox Width="300" x:Name="productWidth" VerticalContentAlignment="Center" IsReadOnly="False"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <Label Content="Ár:" Width="130" Margin="0 0 16 0"/>
+                <TextBox Width="300" x:Name="productPrice" VerticalContentAlignment="Center" IsReadOnly="False"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <Label Content="Kategória:" Width="130" Margin="0 0 16 0"/>
+                <!--checkbox-->
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <Label Content="Képek:" Width="130" Margin="0 0 16 0"/>
+                <TextBox Width="300" x:Name="imagePathTB" Text="{Binding Path=ImageURL, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" IsReadOnly="True"/>
+                <Button Margin="5 0" Click="AddImage_Click" Height="28" Width="100" x:Name="imageUploadBT" >
+                    <fa:ImageAwesome Icon="Spinner" Spin="True" Width="18" Height="18"/>
+                </Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <Label Content="Szín:" Width="130" Margin="0 0 16 0"/>
+                <!--radiobutton-->
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <Label Content="Kapható színek:" Width="130" Margin="0 0 16 0"/>
+                <!--checkbox-->
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <Label Content="Cikkszám:" Width="130" Margin="0 0 16 0"/>
+                <TextBox Width="300" x:Name="productUID" VerticalContentAlignment="Center" IsReadOnly="False"/>
+            </StackPanel>
+        </StackPanel>
+        <Button Content="Import fájl mentése" Click="SaveCSV_Click" DockPanel.Dock="Right" Height="40" Padding="10 0" Margin="10 0 0 0" VerticalAlignment="Bottom" FontWeight="Bold" Background="LightBlue" />
+        <Button Content="Hozzáadás és Új termék" Click="AddNewProduct_Click" DockPanel.Dock="Right" Height="40" Padding="10 0" Margin="10 0 0 0" VerticalAlignment="Bottom" />
+        <Button Content="Hozzáadás és Új szín" Click="AddNewColor_Click" DockPanel.Dock="Right" Height="40" Padding="10 0" Margin="10 0 0 0" VerticalAlignment="Bottom" />
+    </DockPanel>
+</Window>
