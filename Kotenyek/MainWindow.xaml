@@ -8,32 +8,32 @@
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         d:DataContext="{d:DesignInstance Type=view:MainView}"
         mc:Ignorable="d"
-        Title="Termék feltöltés" Width="700" Height="600" MinHeight="600" MinWidth="700" WindowStartupLocation="CenterScreen" Loaded="MainWindow_Loaded">
+        Title="Termék feltöltés" Width="750" Height="600" MinHeight="600" MinWidth="750" WindowStartupLocation="CenterScreen" Loaded="MainWindow_Loaded" SnapsToDevicePixels="True" UseLayoutRounding="True">
     <DockPanel x:Name="mainDockPanel" LastChildFill="False" Margin="20" IsEnabled="False">
-        <StackPanel DockPanel.Dock="Top" Orientation="Vertical">
+        <StackPanel HorizontalAlignment="Center" DockPanel.Dock="Top" Orientation="Vertical">
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                 <Label Content="Név:" Width="130" Margin="0 0 16 0"/>
-                <TextBox Width="300" x:Name="productName" VerticalContentAlignment="Center" IsReadOnly="False"/>
+                <TextBox Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productName" VerticalContentAlignment="Center" IsReadOnly="False"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                 <Label Content="Leírás:" Width="130" Margin="0 0 16 0"/>
-                <TextBox Width="300" x:Name="productShortDescription" VerticalContentAlignment="Center" IsReadOnly="False"/>
+                <TextBox Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productShortDescription" VerticalContentAlignment="Center" IsReadOnly="False"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                 <Label Content="Mosási útmutató:" Width="130" Margin="0 0 16 0"/>
-                <TextBox Width="300" x:Name="productDescription" VerticalContentAlignment="Center" IsReadOnly="False"/>
+                <TextBox Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productDescription" VerticalContentAlignment="Center" IsReadOnly="False"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                 <Label Content="Hossz:" Width="130" Margin="0 0 16 0"/>
-                <TextBox Width="300" x:Name="productLength" VerticalContentAlignment="Center" IsReadOnly="False"/>
+                <TextBox Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productLength" VerticalContentAlignment="Center" IsReadOnly="False"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                 <Label Content="Szélesség:" Width="130" Margin="0 0 16 0"/>
-                <TextBox Width="300" x:Name="productWidth" VerticalContentAlignment="Center" IsReadOnly="False"/>
+                <TextBox Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productWidth" VerticalContentAlignment="Center" IsReadOnly="False"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                 <Label Content="Ár:" Width="130" Margin="0 0 16 0"/>
-                <TextBox Width="300" x:Name="productPrice" VerticalContentAlignment="Center" IsReadOnly="False"/>
+                <TextBox Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productPrice" VerticalContentAlignment="Center" IsReadOnly="False"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                 <Label Content="Kategória:" Width="130" Margin="0 0 16 0"/>
@@ -42,8 +42,8 @@
 
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                 <Label Content="Képek:" Width="130" Margin="0 0 16 0"/>
-                <TextBox Width="300" x:Name="imagePathTB" Text="{Binding Path=ImageURL, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" IsReadOnly="True"/>
-                <Button Margin="5 0" Click="AddImage_Click" Height="28" Width="100" x:Name="imageUploadBT" >
+                <TextBox Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="imagePathTB" Text="{Binding Path=ImageURL, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" IsReadOnly="True"/>
+                <Button Style="{DynamicResource ButtonStyle1}" Margin="5 0" Click="AddImage_Click" Padding="16 8" Width="150" x:Name="imageUploadBT" >
                     <fa:ImageAwesome Icon="Spinner" Spin="True" Width="18" Height="18"/>
                 </Button>
             </StackPanel>
@@ -57,12 +57,12 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                 <Label Content="Cikkszám:" Width="130" Margin="0 0 16 0"/>
-                <TextBox Width="300" x:Name="productUID" VerticalContentAlignment="Center" IsReadOnly="False"/>
+                <TextBox Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productUID" VerticalContentAlignment="Center" IsReadOnly="False"/>
             </StackPanel>
         </StackPanel>
-        <Button Content="Import fájl mentése" Click="SaveCSV_Click" DockPanel.Dock="Right" Height="40" Padding="10 0" Margin="10 0 0 0" VerticalAlignment="Bottom" FontWeight="Bold" Background="LightBlue" />
-        <Button Content="Hozzáadás és Új termék" Click="AddNewProduct_Click" DockPanel.Dock="Right" Height="40" Padding="10 0" Margin="10 0 0 0" VerticalAlignment="Bottom" />
-        <Button Content="Hozzáadás és Új szín" Click="AddNewColor_Click" DockPanel.Dock="Right" Height="40" Padding="10 0" Margin="10 0 0 0" VerticalAlignment="Bottom" />
-        <Button Content="Kijelentkezés" Click="LogOut_Click" DockPanel.Dock="Left" Height="40" Padding="5 0" Margin="0 0 10 0" VerticalAlignment="Bottom" Background="Tomato" />
+        <Button Style="{DynamicResource ButtonStyle1}" Content="Import fájl mentése" Click="SaveCSV_Click" DockPanel.Dock="Right" Padding="16 8" Margin="10 0 0 0" VerticalAlignment="Bottom" FontWeight="Bold" Background="Green" />
+        <Button Style="{DynamicResource ButtonStyle1}" Content="Hozzáadás és Új termék" Click="AddNewProduct_Click" DockPanel.Dock="Right" Padding="16 8" Margin="10 0 0 0" VerticalAlignment="Bottom" />
+        <Button Style="{DynamicResource ButtonStyle1}" Content="Hozzáadás és Új szín" Click="AddNewColor_Click" DockPanel.Dock="Right" Padding="16 8" Margin="10 0 0 0" VerticalAlignment="Bottom" />
+        <Button Style="{DynamicResource ButtonStyle1}" Content="Kijelentkezés" Click="LogOut_Click" DockPanel.Dock="Left" Padding="16 8" Margin="0 0 10 0" VerticalAlignment="Bottom" Background="Tomato" />
     </DockPanel>
 </Window>

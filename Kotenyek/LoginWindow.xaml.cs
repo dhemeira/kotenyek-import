@@ -1,21 +1,8 @@
-﻿using Kotenyek.View;
-using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
+﻿using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Text.Json.Nodes;
 using System.Net.Http.Json;
 using System.Text.Json.Serialization;
 
@@ -76,7 +63,7 @@ namespace Kotenyek
             LoginUser();
         }
 
-        private void sitePasswordTB_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void SitePasswordTB_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
@@ -84,7 +71,7 @@ namespace Kotenyek
             }
         }
 
-        private void siteURLTB_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void SiteURLTB_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
@@ -92,7 +79,7 @@ namespace Kotenyek
             }
         }
 
-        private void siteUsernameTB_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void SiteUsernameTB_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {

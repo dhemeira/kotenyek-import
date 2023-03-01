@@ -6,23 +6,23 @@
         xmlns:local="clr-namespace:Kotenyek"
         mc:Ignorable="d"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
-        Title="Bejelentkezés" Width="420" Height="260" MinHeight="260" MinWidth="420" WindowStartupLocation="CenterOwner">
+        Title="Bejelentkezés" Width="450" Height="280" MinHeight="280" MinWidth="450" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" SnapsToDevicePixels="True" UseLayoutRounding="True">
     <Grid>
         <fa:ImageAwesome x:Name="loginSpinner" Panel.ZIndex="1"  Icon="Spinner" Spin="True" Width="40" Height="40" Visibility="Hidden" />
         <StackPanel x:Name="mainLoginStackPanel" Orientation="Vertical" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Center">
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <Label Content="Oldal URL:" Width="130" Margin="0 0 16 0"/>
-                <TextBox Width="200" x:Name="siteURLTB" VerticalContentAlignment="Center" IsReadOnly="False" PreviewKeyDown="siteURLTB_PreviewKeyDown"/>
+                <Label Content="Oldal URL:" Width="100" Margin="0 0 16 0"/>
+                <TextBox Width="250" Style="{DynamicResource TextBoxStyle1}" x:Name="siteURLTB" PreviewKeyDown="SiteURLTB_PreviewKeyDown"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <Label Content="Felhasználónév:" Width="130" Margin="0 0 16 0"/>
-                <TextBox Width="200" x:Name="siteUsernameTB" VerticalContentAlignment="Center" IsReadOnly="False" PreviewKeyDown="siteUsernameTB_PreviewKeyDown"/>
+                <Label Content="Felhasználónév:" Width="100" Margin="0 0 16 0"/>
+                <TextBox Width="250" Style="{DynamicResource TextBoxStyle1}" x:Name="siteUsernameTB" PreviewKeyDown="SiteUsernameTB_PreviewKeyDown"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <Label Content="Jelszó:" Width="130" Margin="0 0 16 0"/>
-                <PasswordBox Width="200" x:Name="sitePasswordTB" VerticalContentAlignment="Center" PreviewKeyDown="sitePasswordTB_PreviewKeyDown"/>
+                <Label Content="Jelszó:" Width="100" Margin="0 0 16 0"/>
+                <PasswordBox Width="250" Style="{DynamicResource PasswordBoxStyle1}" x:Name="sitePasswordTB" PreviewKeyDown="SitePasswordTB_PreviewKeyDown"/>
             </StackPanel>
-            <Button x:Name="loginUserButton" Content="Bejelentkezés" Height="40" Margin="30 10" Click="LoginUser_Click" />
+            <Button Style="{DynamicResource ButtonStyle1}" x:Name="loginUserButton" Content="Bejelentkezés" Padding="16 8" Margin="30 10" Click="LoginUser_Click"/>
         </StackPanel>
     </Grid>
 </Window>
