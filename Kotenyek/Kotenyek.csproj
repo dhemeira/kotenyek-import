@@ -9,13 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Assets\woocommerce-placeholder.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Assets\woocommerce-placeholder.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="favicon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
