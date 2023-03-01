@@ -92,7 +92,7 @@ namespace Kotenyek
             StringBuilder hibak = new();
             //munka>c#>wpf gyakorlo>asztali tenisz gui-ban további minta
             if (string.IsNullOrWhiteSpace(productName.Text)) hibak.AppendLine("Nincs megadva a termék neve");
-            //string.IsNullOrWhiteSpace(productShortDescription.Text) ||
+            if (string.IsNullOrWhiteSpace(productShortDescription.Text)) hibak.AppendLine("Nincs megadva a termék leírása");
             //    string.IsNullOrWhiteSpace(productDescription.Text) ||
             //    string.IsNullOrWhiteSpace(productLength.Text) ||
             //    string.IsNullOrWhiteSpace(productWidth.Text) ||
