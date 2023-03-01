@@ -8,8 +8,8 @@
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         d:DataContext="{d:DesignInstance Type=view:MainView}"
         mc:Ignorable="d"
-        Title="Termék feltöltés - KÖTÉNYEK.hu" Width="640" Height="540" MinHeight="540" MinWidth="640">
-    <DockPanel LastChildFill="False" Margin="20">
+        Title="Termék feltöltés" Width="700" Height="600" MinHeight="600" MinWidth="700" WindowStartupLocation="CenterScreen" Loaded="MainWindow_Loaded">
+    <DockPanel x:Name="mainDockPanel" LastChildFill="False" Margin="20" IsEnabled="False">
         <StackPanel DockPanel.Dock="Top" Orientation="Vertical">
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                 <Label Content="Név:" Width="130" Margin="0 0 16 0"/>
@@ -63,5 +63,6 @@
         <Button Content="Import fájl mentése" Click="SaveCSV_Click" DockPanel.Dock="Right" Height="40" Padding="10 0" Margin="10 0 0 0" VerticalAlignment="Bottom" FontWeight="Bold" Background="LightBlue" />
         <Button Content="Hozzáadás és Új termék" Click="AddNewProduct_Click" DockPanel.Dock="Right" Height="40" Padding="10 0" Margin="10 0 0 0" VerticalAlignment="Bottom" />
         <Button Content="Hozzáadás és Új szín" Click="AddNewColor_Click" DockPanel.Dock="Right" Height="40" Padding="10 0" Margin="10 0 0 0" VerticalAlignment="Bottom" />
+        <Button Content="Kijelentkezés" Click="LogOut_Click" DockPanel.Dock="Left" Height="40" Padding="5 0" Margin="0 0 10 0" VerticalAlignment="Bottom" Background="Tomato" />
     </DockPanel>
 </Window>

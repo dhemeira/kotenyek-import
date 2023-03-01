@@ -1,0 +1,28 @@
+﻿<Window x:Class="Kotenyek.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Kotenyek"
+        mc:Ignorable="d"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        Title="Bejelentkezés" Width="420" Height="260" MinHeight="260" MinWidth="420" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <fa:ImageAwesome x:Name="loginSpinner" Panel.ZIndex="1"  Icon="Spinner" Spin="True" Width="40" Height="40" Visibility="Hidden" />
+        <StackPanel x:Name="mainLoginStackPanel" Orientation="Vertical" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <Label Content="Oldal URL:" Width="130" Margin="0 0 16 0"/>
+                <TextBox Width="200" x:Name="siteURLTB" VerticalContentAlignment="Center" IsReadOnly="False" PreviewKeyDown="siteURLTB_PreviewKeyDown"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <Label Content="Felhasználónév:" Width="130" Margin="0 0 16 0"/>
+                <TextBox Width="200" x:Name="siteUsernameTB" VerticalContentAlignment="Center" IsReadOnly="False" PreviewKeyDown="siteUsernameTB_PreviewKeyDown"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <Label Content="Jelszó:" Width="130" Margin="0 0 16 0"/>
+                <PasswordBox Width="200" x:Name="sitePasswordTB" VerticalContentAlignment="Center" PreviewKeyDown="sitePasswordTB_PreviewKeyDown"/>
+            </StackPanel>
+            <Button x:Name="loginUserButton" Content="Bejelentkezés" Height="40" Margin="30 10" Click="LoginUser_Click" />
+        </StackPanel>
+    </Grid>
+</Window>

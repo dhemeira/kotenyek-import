@@ -16,13 +16,44 @@ namespace Kotenyek
     {
         readonly List<Product> Products = new();
         readonly MainView mainView = new();
+
+        public static bool IsUserNotLoggedIn => string.IsNullOrWhiteSpace(Properties.Settings.Default.AuthToken) || string.IsNullOrWhiteSpace(Properties.Settings.Default.SiteURL);
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent();          
             DataContext = mainView;
             mainView.ImageURL = "";
             this.Spinner = imageUploadBT.Content;
             imageUploadBT.Content = "Képek feltöltése";
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoginUser();
+        }
+
+        private void LoginUser()
+        {
+            mainDockPanel.IsEnabled = false;
+            if (IsUserNotLoggedIn)
+            {
+                LoginWindow loginWindow = new()
+                {
+                    Owner = this
+                };
+                loginWindow.ShowDialog();
+                if (IsUserNotLoggedIn) Application.Current.Shutdown();
+                else
+                {
+                    mainDockPanel.IsEnabled = true;
+                    productName.Focus();
+                }
+            }
+            else
+            {
+                mainDockPanel.IsEnabled = true;
+                productName.Focus();
+            }
         }
 
         public object Spinner { get; private set; }
@@ -58,9 +89,6 @@ namespace Kotenyek
 
                 var client = new HttpClient();
                 var request = new HttpRequestMessage(HttpMethod.Post, $"{Properties.Settings.Default.SiteURL}/wp-json/wp/v2/media");
-                //token generálás után token mentése:
-                //Properties.Settings.Default.AuthToken = authtoken ide;  
-                //Properties.Settings.Default.Save();
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.AuthToken);
 
                 request.Content = new StreamContent(fileDialog.OpenFile());
@@ -159,6 +187,17 @@ namespace Kotenyek
         private void AddNewColor_Click(object sender, RoutedEventArgs e)
         {
             return;
+        }
+
+        private void LogOut_Click(object sender, RoutedEventArgs e)
+        {
+            if(MessageBox.Show("Biztosan ki szeretnél jelentkezni?", "Kijelentkezés", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.Yes)
+            {
+                Properties.Settings.Default.AuthToken = "";
+                Properties.Settings.Default.SiteURL = "";
+                Properties.Settings.Default.Save();
+                LoginUser();
+            }
         }
     }
 }
