@@ -17,6 +17,8 @@ namespace Kotenyek
     {
         readonly List<Product> Products = new();
         readonly MainView mainView = new();
+        readonly HttpClient client = new();
+        object Spinner { get; set; }
 
         public static bool IsUserNotLoggedIn => string.IsNullOrWhiteSpace(Properties.Settings.Default.AuthToken) || string.IsNullOrWhiteSpace(Properties.Settings.Default.SiteURL);
         public MainWindow()
@@ -35,7 +37,6 @@ namespace Kotenyek
         private async Task ValidateToken()
         {
             var siteURL = Properties.Settings.Default.SiteURL;
-            var client = new HttpClient();
             var request = new HttpRequestMessage(HttpMethod.Post, $"{siteURL}/wp-json/jwt-auth/v1/token/validate");
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.AuthToken);
             var response = await client.SendAsync(request);
@@ -43,6 +44,23 @@ namespace Kotenyek
             if (response == null || response.StatusCode != System.Net.HttpStatusCode.OK)
             {
                 LogOut();
+            }
+        }
+
+        private async Task HandleResponse(HttpResponseMessage? response)
+        {
+            if (response != null)
+            {
+                var responseContent = await response.Content.ReadAsStringAsync();
+                var imageUrl = responseContent.Split(',')[3].Split('"')[5];
+                if (mainView.ImageURL == "")
+                {
+                    mainView.ImageURL = System.Text.RegularExpressions.Regex.Unescape(imageUrl);
+                }
+                else
+                {
+                    mainView.ImageURL += "," + System.Text.RegularExpressions.Regex.Unescape(imageUrl);
+                }
             }
         }
 
@@ -75,25 +93,15 @@ namespace Kotenyek
                 productName.Focus();
             }
         }
-
-        public object Spinner { get; private set; }
-        public class Product
-        {
-            public string? Name { get; set; }
-            public string? ShortDescription { get; set; }
-            public string? Description { get; set; }
-            public int Length { get; set; }
-            public int Width { get; set; }
-            public int Price { get; set; }
-            public string? Category { get; set; }
-            public string? Images { get; set; }
-            public string? Color { get; set; }
-            public string? AvailableColors { get; set; }
-            public string? UID { get; set; }
-        }
-
+ 
         private async void AddImage_Click(object sender, RoutedEventArgs e)
         {
+            imageUploadBT.IsEnabled = false;
+            addAndColorBT.IsEnabled = false;
+            addAndNewBT.IsEnabled = false;
+            logOutBT.IsEnabled = false;
+            saveImportBT.IsEnabled = false;
+            imageUploadBT.Content = this.Spinner;
             var fileDialog = new OpenFileDialog()
             {
                 Filter = "Képek (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png",
@@ -104,12 +112,8 @@ namespace Kotenyek
 
             if (result == true)
             {
-                imageUploadBT.IsEnabled = false;
-                imageUploadBT.Content = this.Spinner;
-
                 await ValidateToken();
 
-                var client = new HttpClient();
                 var request = new HttpRequestMessage(HttpMethod.Post, $"{Properties.Settings.Default.SiteURL}/wp-json/wp/v2/media");
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.AuthToken);
 
@@ -117,54 +121,47 @@ namespace Kotenyek
                 request.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
                 request.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = fileDialog.SafeFileName };
                 var response = await client.SendAsync(request);
-
-                if (response != null)
-                {
-                    var responseContent = await response.Content.ReadAsStringAsync();
-                    var imageUrl = responseContent.Split(',')[3].Split('"')[5];
-                    if (mainView.ImageURL == "")
-                    {
-                        mainView.ImageURL = System.Text.RegularExpressions.Regex.Unescape(imageUrl);
-                    }
-                    else
-                    {
-                        mainView.ImageURL += "," + System.Text.RegularExpressions.Regex.Unescape(imageUrl);
-                    }
-                }
-
-                imageUploadBT.Content = "Képek feltöltése";             
-                imageUploadBT.IsEnabled = true;
+                await HandleResponse(response);                    
             }
+            imageUploadBT.Content = "Képek feltöltése";
+            imageUploadBT.IsEnabled = true;
+            addAndColorBT.IsEnabled = true;
+            addAndNewBT.IsEnabled = true;
+            logOutBT.IsEnabled = true;
+            saveImportBT.IsEnabled = true;
+        }
+
+        private string CheckForErrors(out int length, out int width, out int price)
+        {
+            StringBuilder errors = new();
+            if (string.IsNullOrWhiteSpace(productName.Text))
+            {
+                errors.AppendLine("Nincs megadva a termék neve");
+                if (!productName.Text.ToUpper().Contains($"({productUID.Text.ToUpper()})")) errors.AppendLine("A termék neve nem tartalmazza a cikkszámot");
+            }
+            if (string.IsNullOrWhiteSpace(productShortDescription.Text)) errors.AppendLine("Nincs megadva a termék leírása");
+            if (string.IsNullOrWhiteSpace(productDescription.Text)) errors.AppendLine("Nincs megadva a termék mosási útmutatója");
+            if (!int.TryParse(productLength.Text, out length)) errors.AppendLine("Nincs megadva a termék hossza");
+            if (!int.TryParse(productWidth.Text, out width)) errors.AppendLine("Nincs megadva a termék szélessége");
+            if (!int.TryParse(productPrice.Text, out price)) errors.AppendLine("Nincs megadva a termék ára");
+            //kategória checkbox
+            if (string.IsNullOrWhiteSpace(mainView.ImageURL)) errors.AppendLine("Nincsenek megadva a termék képei");
+            //szín radiobutton
+            //kapható színek checkbox
+            if (string.IsNullOrWhiteSpace(productUID.Text)) errors.AppendLine("Nincs megadva a termék cikkszáma");
+            return errors.ToString();
         }
 
         private bool AddProductToList()
         {
-            StringBuilder hibak = new();
-            if (string.IsNullOrWhiteSpace(productName.Text))
-            {
-                hibak.AppendLine("Nincs megadva a termék neve");
-                if (!productName.Text.ToUpper().Contains($"({productUID.Text.ToUpper()})")) hibak.AppendLine("A termék neve nem tartalmazza a cikkszámot");
-            }
-            if (string.IsNullOrWhiteSpace(productShortDescription.Text)) hibak.AppendLine("Nincs megadva a termék leírása");
-            if (string.IsNullOrWhiteSpace(productDescription.Text)) hibak.AppendLine("Nincs megadva a termék mosási útmutatója");
-            if (!int.TryParse(productLength.Text, out int length)) hibak.AppendLine("Nincs megadva a termék hossza");
-            if (!int.TryParse(productWidth.Text,out int width)) hibak.AppendLine("Nincs megadva a termék szélessége");
-            if (!int.TryParse(productPrice.Text, out int price)) hibak.AppendLine("Nincs megadva a termék ára");
-            //kategória checkbox
-            if (string.IsNullOrWhiteSpace(mainView.ImageURL)) hibak.AppendLine("Nincsenek megadva a termék képei");
-            //szín radiobutton
-            //kapható színek checkbox
-            if (string.IsNullOrWhiteSpace(productUID.Text)) hibak.AppendLine("Nincs megadva a termék cikkszáma");
-
-            string hiba = hibak.ToString();
-            if (string.IsNullOrEmpty(hiba))
-            {
-                
+            string errorList = CheckForErrors(out int length, out int width, out int price);
+            if (string.IsNullOrEmpty(errorList))
+            {            
                 Products.Add(new Product()
                 {
                     Name = productName.Text.ToUpper(),
-                    ShortDescription = productShortDescription.Text.Replace("\r", ""),
-                    Description = $"Mosási útmutató:\n<img src=\"{productDescription.Text}\" alt=\"Mosási útmutató\" width=\"166\" height=\"30\" class=\"alignnone size-full wp-image-1186\"/>",
+                    ShortDescription = $"\"{productShortDescription.Text.Replace("\r", "")}\"",
+                    Description = $"\"Mosási útmutató:\n<img src=\"{productDescription.Text}\" alt=\"Mosási útmutató\" width=\"166\" height=\"30\" class=\"alignnone size-full wp-image-1186\"/>\"",
                     Length = length,
                     Width = width,
                     Price = price,
@@ -178,7 +175,7 @@ namespace Kotenyek
             }
             else
             {
-                MessageBox.Show(hiba, "Beviteli hiba");
+                Helpers.ShowMessage(errorList, "Beviteli hiba");
                 return false;
             }
         }
@@ -203,6 +200,8 @@ namespace Kotenyek
 
         private void SaveCSV_Click(object sender, RoutedEventArgs e)
         {
+            mainDockPanel.IsEnabled = false;
+            loginSpinner.Visibility = Visibility.Visible;
             SaveFileDialog saveFileDialog = new()
             {
                 Filter = "UTF-8 CSV fájl (*.csv)|*.csv",
@@ -218,6 +217,9 @@ namespace Kotenyek
                 }
                 streamWriter.Close();
             }
+            mainDockPanel.IsEnabled = true;
+            loginSpinner.Visibility = Visibility.Hidden;
+            productName.Focus();
         }
 
         private void AddNewColor_Click(object sender, RoutedEventArgs e)
@@ -233,7 +235,7 @@ namespace Kotenyek
 
         private void LogOut_Click(object sender, RoutedEventArgs e)
         {
-            if(MessageBox.Show("Biztosan ki szeretnél jelentkezni?", "Kijelentkezés", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.Yes)
+            if(Helpers.ShowMessage("Biztosan ki szeretnél jelentkezni?", "Kijelentkezés", true))
             {
                 LogOut();
             }
