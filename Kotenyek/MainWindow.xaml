@@ -9,72 +9,75 @@
         d:DataContext="{d:DesignInstance Type=view:MainView}"
         mc:Ignorable="d"
         Title="Termék feltöltés" Width="970" Height="550" MinWidth="970" MinHeight="550" WindowStartupLocation="CenterScreen" Loaded="MainWindow_Loaded" SnapsToDevicePixels="True" UseLayoutRounding="True">
-    <DockPanel x:Name="mainDockPanel" LastChildFill="True" Margin="20" IsEnabled="False">
-        <DockPanel DockPanel.Dock="Top" LastChildFill="True" Margin="0 0 0 10">
-            <Label DockPanel.Dock="Left" Content="Képek:" Width="130" Margin="0 0 16 0"/>
-            
-            <Button TabIndex="2" DockPanel.Dock="Right" Style="{DynamicResource ButtonStyle1}" Margin="5 0" Click="AddImage_Click" Padding="16 8" Width="150" x:Name="imageUploadBT" >
-                <fa:ImageAwesome Icon="Spinner" Spin="True" Width="18" Height="18"/>
-            </Button>
-            <TextBox TabIndex="1" Style="{DynamicResource TextBoxStyle1}" x:Name="imagePathTB" Text="{Binding Path=ImageURL, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" IsReadOnly="True"/>
-        </DockPanel>
+    <Grid>
+        <fa:ImageAwesome x:Name="loginSpinner" Panel.ZIndex="1"  Icon="Spinner" Spin="True" Width="80" Height="80" Visibility="Hidden" />
+        <DockPanel x:Name="mainDockPanel" LastChildFill="True" Margin="20" IsEnabled="False">
+            <DockPanel DockPanel.Dock="Top" LastChildFill="True" Margin="0 0 0 10">
+                <Label DockPanel.Dock="Left" Content="Képek:" Width="130" Margin="0 0 16 0"/>
 
-        <DockPanel DockPanel.Dock="Bottom" LastChildFill="False" Margin="0 10 0 0">
-            <Button TabIndex="10003" DockPanel.Dock="Right" Style="{DynamicResource ButtonStyle1}" Content="Import fájl mentése" Click="SaveCSV_Click" Padding="16 8" Margin="10 0 0 0" FontWeight="Bold" Background="Green" />
-            <Button TabIndex="10002" DockPanel.Dock="Right" Style="{DynamicResource ButtonStyle1}" Content="Hozzáadás és Új termék" Click="AddNewProduct_Click" Padding="16 8" Margin="10 0 0 0" />
-            <Button TabIndex="10001" DockPanel.Dock="Right" Style="{DynamicResource ButtonStyle1}" Content="Hozzáadás és Új szín" Click="AddNewColor_Click" Padding="16 8" Margin="10 0 0 0" />
-            <Button IsTabStop="False" DockPanel.Dock="Left" Style="{DynamicResource ButtonStyle1}" Content="Kijelentkezés" Click="LogOut_Click" Padding="16 8" Margin="0 0 10 0" Background="Tomato" />
+                <Button TabIndex="2" DockPanel.Dock="Right" Style="{DynamicResource ButtonStyle1}" Margin="5 0" Click="AddImage_Click" Padding="16 8" Width="150" x:Name="imageUploadBT" >
+                    <fa:ImageAwesome Icon="Spinner" Spin="True" Width="18" Height="18"/>
+                </Button>
+                <TextBox TabIndex="1" Style="{DynamicResource TextBoxStyle1}" x:Name="imagePathTB" Text="{Binding Path=ImageURL, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" IsReadOnly="True"/>
+            </DockPanel>
+
+            <DockPanel DockPanel.Dock="Bottom" LastChildFill="False" Margin="0 10 0 0">
+                <Button TabIndex="10003" DockPanel.Dock="Right" Style="{DynamicResource ButtonStyle1}" Content="Import fájl mentése" Click="SaveCSV_Click" Padding="16 8" Margin="10 0 0 0" FontWeight="Bold" Background="Green" />
+                <Button TabIndex="10002" DockPanel.Dock="Right" Style="{DynamicResource ButtonStyle1}" Content="Hozzáadás és Új termék" Click="AddNewProduct_Click" Padding="16 8" Margin="10 0 0 0" />
+                <Button TabIndex="10001" DockPanel.Dock="Right" Style="{DynamicResource ButtonStyle1}" Content="Hozzáadás és Új szín" Click="AddNewColor_Click" Padding="16 8" Margin="10 0 0 0" />
+                <Button IsTabStop="False" DockPanel.Dock="Left" Style="{DynamicResource ButtonStyle1}" Content="Kijelentkezés" Click="LogOut_Click" Padding="16 8" Margin="0 0 10 0" Background="Tomato" />
+            </DockPanel>
+
+            <StackPanel DockPanel.Dock="Left" Orientation="Vertical" Margin="0 0 10 0">
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                    <Label Content="Név:" Width="130" Margin="0 0 16 0"/>
+                    <TextBox TabIndex="3" Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productName" VerticalContentAlignment="Center" IsReadOnly="False"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                    <Label Content="Leírás:" Width="130" Margin="0 0 16 0"/>
+                    <TextBox TabIndex="4" Style="{DynamicResource TextBoxStyle1}" Height="155" Width="300" x:Name="productShortDescription" VerticalContentAlignment="Center" IsReadOnly="False" AcceptsReturn="true"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                    <Label Content="Ár:" Width="130" Margin="0 0 16 0"/>
+                    <TextBox TabIndex="5" Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productPrice" VerticalContentAlignment="Center" IsReadOnly="False"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                    <Label Content="Kategória:" Width="130" Margin="0 0 16 0"/>
+                    <!--checkbox-->
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                    <Label Content="Cikkszám:" Width="130" Margin="0 0 16 0"/>
+                    <TextBox TabIndex="100" Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productUID" VerticalContentAlignment="Center" IsReadOnly="False"/>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel DockPanel.Dock="Right" Orientation="Vertical" Margin="10 0 0 0">
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                    <Label Content="Mosási útmutató:" Width="130" Margin="0 0 16 0"/>
+                    <TextBox TabIndex="1000" Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productDescription" VerticalContentAlignment="Center" IsReadOnly="False"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                    <Label Content="Hossz:" Width="130" Margin="0 0 16 0"/>
+                    <TextBox TabIndex="1001" Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productLength" VerticalContentAlignment="Center" IsReadOnly="False"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                    <Label Content="Szélesség:" Width="130" Margin="0 0 16 0"/>
+                    <TextBox TabIndex="1002" Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productWidth" VerticalContentAlignment="Center" IsReadOnly="False"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                    <Label Content="Szín:" Width="130" Margin="0 0 16 0"/>
+                    <ComboBox TabIndex="1003" ItemContainerStyle="{DynamicResource ComboBoxItemContainerStyle1}" Padding="8" Style="{DynamicResource ComboBoxStyle1}" x:Name="productColor" IsEditable="True" Width="300" IsTextSearchEnabled="True">
+                        <ComboBoxItem></ComboBoxItem>
+                        <ComboBoxItem>Fekete</ComboBoxItem>
+                        <ComboBoxItem>Fehér</ComboBoxItem>
+                        <ComboBoxItem>Szürke</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                    <Label Content="Kapható színek:" Width="130" Margin="0 0 16 0"/>
+                    <!--checkbox-->
+                </StackPanel>
+            </StackPanel>
         </DockPanel>
-        
-        <StackPanel DockPanel.Dock="Left" Orientation="Vertical" Margin="0 0 10 0">
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <Label Content="Név:" Width="130" Margin="0 0 16 0"/>
-                <TextBox TabIndex="3" Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productName" VerticalContentAlignment="Center" IsReadOnly="False"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <Label Content="Leírás:" Width="130" Margin="0 0 16 0"/>
-                <TextBox TabIndex="4" Style="{DynamicResource TextBoxStyle1}" Height="155" Width="300" x:Name="productShortDescription" VerticalContentAlignment="Center" IsReadOnly="False" AcceptsReturn="true"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <Label Content="Ár:" Width="130" Margin="0 0 16 0"/>
-                <TextBox TabIndex="5" Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productPrice" VerticalContentAlignment="Center" IsReadOnly="False"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <Label Content="Kategória:" Width="130" Margin="0 0 16 0"/>
-                <!--checkbox-->
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <Label Content="Cikkszám:" Width="130" Margin="0 0 16 0"/>
-                <TextBox TabIndex="100" Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productUID" VerticalContentAlignment="Center" IsReadOnly="False"/>
-            </StackPanel>
-        </StackPanel>
-        
-        <StackPanel DockPanel.Dock="Right" Orientation="Vertical" Margin="10 0 0 0">
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <Label Content="Mosási útmutató:" Width="130" Margin="0 0 16 0"/>
-                <TextBox TabIndex="1000" Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productDescription" VerticalContentAlignment="Center" IsReadOnly="False"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <Label Content="Hossz:" Width="130" Margin="0 0 16 0"/>
-                <TextBox TabIndex="1001" Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productLength" VerticalContentAlignment="Center" IsReadOnly="False"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <Label Content="Szélesség:" Width="130" Margin="0 0 16 0"/>
-                <TextBox TabIndex="1002" Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productWidth" VerticalContentAlignment="Center" IsReadOnly="False"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <Label Content="Szín:" Width="130" Margin="0 0 16 0"/>
-                <ComboBox TabIndex="1003" ItemContainerStyle="{DynamicResource ComboBoxItemContainerStyle1}" Padding="8" Style="{DynamicResource ComboBoxStyle1}" x:Name="productColor" IsEditable="True" Width="300" IsTextSearchEnabled="True">
-                    <ComboBoxItem></ComboBoxItem>
-                    <ComboBoxItem>Fekete</ComboBoxItem>
-                    <ComboBoxItem>Fehér</ComboBoxItem>
-                    <ComboBoxItem>Szürke</ComboBoxItem>
-                </ComboBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <Label Content="Kapható színek:" Width="130" Margin="0 0 16 0"/>
-                <!--checkbox-->
-            </StackPanel>
-        </StackPanel>
-    </DockPanel>
+    </Grid>
 </Window>

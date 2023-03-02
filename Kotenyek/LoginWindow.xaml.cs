@@ -32,30 +32,39 @@ namespace Kotenyek
                 mainLoginStackPanel.IsEnabled = false;
                 loginSpinner.Visibility = Visibility.Visible;
                 var siteURL = "https://" + siteURLTB.Text.Trim().Split("/").ToList().Find(x => x.Contains(".hu") || x.Contains(".com"));
-                var client = new HttpClient();
-                var request = new HttpRequestMessage(HttpMethod.Post, $"{siteURL}/wp-json/jwt-auth/v1/token")
+                if(siteURL.Contains(".hu") || siteURL.Contains(".com"))
                 {
-                    Content = new StringContent($"{{\"username\":\"{siteUsernameTB.Text.Trim()}\",\"password\":\"{sitePasswordTB.Password.Trim()}\"}}", Encoding.UTF8, "application/json")
-                };
-                var response = await client.SendAsync(request);
+                    var client = new HttpClient();
+                    var request = new HttpRequestMessage(HttpMethod.Post, $"{siteURL}/wp-json/jwt-auth/v1/token")
+                    {
+                        Content = new StringContent($"{{\"username\":\"{siteUsernameTB.Text.Trim()}\",\"password\":\"{sitePasswordTB.Password.Trim()}\"}}", Encoding.UTF8, "application/json")
+                    };
+                    var response = await client.SendAsync(request);
 
-                if (response != null && response.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    var responseContent = await response.Content.ReadFromJsonAsync<TokenResponse>();
-                    Properties.Settings.Default.SiteURL = siteURL;
-                    Properties.Settings.Default.AuthToken = responseContent?.Token;
-                    Properties.Settings.Default.Save();
-                    this.Close();
+                    if (response != null && response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        var responseContent = await response.Content.ReadFromJsonAsync<TokenResponse>();
+                        Properties.Settings.Default.SiteURL = siteURL;
+                        Properties.Settings.Default.AuthToken = responseContent?.Token;
+                        Properties.Settings.Default.Save();
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Hibás adatok!", "Hiba");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Hibás adatok!", "Hiba");
+                    MessageBox.Show("Hibás oldal URL!", "Hiba");
                 }
             }
             else
             {
                 MessageBox.Show("Hibás adatok!", "Hiba");
             }
+            mainLoginStackPanel.IsEnabled = true;
+            loginSpinner.Visibility = Visibility.Hidden;
         }
 
         private void LoginUser_Click(object sender, RoutedEventArgs e)

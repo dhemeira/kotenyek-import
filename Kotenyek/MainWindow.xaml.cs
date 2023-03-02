@@ -6,6 +6,7 @@ using System.IO;
 using Kotenyek.View;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace Kotenyek
 {
@@ -24,7 +25,6 @@ namespace Kotenyek
             DataContext = mainView;
             mainView.ImageURL = "";
             this.Spinner = imageUploadBT.Content;
-            imageUploadBT.Content = "Képek feltöltése";
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -32,9 +32,26 @@ namespace Kotenyek
             LoginUser();
         }
 
-        private void LoginUser()
+        private async Task ValidateToken()
         {
+            var siteURL = Properties.Settings.Default.SiteURL;
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Post, $"{siteURL}/wp-json/jwt-auth/v1/token/validate");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.AuthToken);
+            var response = await client.SendAsync(request);
+
+            if (response == null || response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                LogOut();
+            }
+        }
+
+        private async void LoginUser()
+        {
+            imageUploadBT.Content = "Képek feltöltése";
+            imageUploadBT.IsEnabled = true;
             mainDockPanel.IsEnabled = false;
+            loginSpinner.Visibility = Visibility.Visible;
             if (IsUserNotLoggedIn)
             {
                 LoginWindow loginWindow = new()
@@ -51,7 +68,9 @@ namespace Kotenyek
             }
             else
             {
+                await ValidateToken();
                 mainDockPanel.IsEnabled = true;
+                loginSpinner.Visibility = Visibility.Hidden;
                 productName.Focus();
             }
         }
@@ -86,6 +105,8 @@ namespace Kotenyek
             {
                 imageUploadBT.IsEnabled = false;
                 imageUploadBT.Content = this.Spinner;
+
+                await ValidateToken();
 
                 var client = new HttpClient();
                 var request = new HttpRequestMessage(HttpMethod.Post, $"{Properties.Settings.Default.SiteURL}/wp-json/wp/v2/media");
@@ -213,11 +234,16 @@ namespace Kotenyek
         {
             if(MessageBox.Show("Biztosan ki szeretnél jelentkezni?", "Kijelentkezés", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.Yes)
             {
-                Properties.Settings.Default.AuthToken = "";
-                Properties.Settings.Default.SiteURL = "";
-                Properties.Settings.Default.Save();
-                LoginUser();
+                LogOut();
             }
+        }
+
+        private void LogOut()
+        {
+            Properties.Settings.Default.AuthToken = "";
+            Properties.Settings.Default.SiteURL = "";
+            Properties.Settings.Default.Save();
+            LoginUser();
         }
     }
 }
