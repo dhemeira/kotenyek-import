@@ -160,8 +160,8 @@ namespace Kotenyek
                 Products.Add(new Product()
                 {
                     Name = productName.Text.ToUpper(),
-                    ShortDescription = $"\"{productShortDescription.Text.Replace("\r", "")}\"",
-                    Description = $"\"Mosási útmutató:\n<img src=\"{productDescription.Text}\" alt=\"Mosási útmutató\" width=\"166\" height=\"30\" class=\"alignnone size-full wp-image-1186\"/>\"",
+                    ShortDescription = productShortDescription.Text.Replace("\r", "").Replace("\n","\\n"),
+                    Description = $"Mosási útmutató:\\n<img src=\"{productDescription.Text}\" alt=\"Mosási útmutató\" width=\"166\" height=\"30\" class=\"alignnone size-full wp-image-1186\"/>",
                     Length = length,
                     Width = width,
                     Price = price,
