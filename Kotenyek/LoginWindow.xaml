@@ -12,17 +12,17 @@
         <StackPanel x:Name="mainLoginStackPanel" Orientation="Vertical" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Center">
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                 <Label Content="Oldal URL:" Width="100" Margin="0 0 16 0"/>
-                <TextBox Width="250" Style="{DynamicResource TextBoxStyle1}" x:Name="siteURLTB" PreviewKeyDown="SiteURLTB_PreviewKeyDown"/>
+                <TextBox TabIndex="1" Width="250" Style="{DynamicResource TextBoxStyle1}" x:Name="siteURLTB" PreviewKeyDown="SiteURLTB_PreviewKeyDown"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                 <Label Content="Felhasználónév:" Width="100" Margin="0 0 16 0"/>
-                <TextBox Width="250" Style="{DynamicResource TextBoxStyle1}" x:Name="siteUsernameTB" PreviewKeyDown="SiteUsernameTB_PreviewKeyDown"/>
+                <TextBox TabIndex="2" Width="250" Style="{DynamicResource TextBoxStyle1}" x:Name="siteUsernameTB" PreviewKeyDown="SiteUsernameTB_PreviewKeyDown"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                 <Label Content="Jelszó:" Width="100" Margin="0 0 16 0"/>
-                <PasswordBox Width="250" Style="{DynamicResource PasswordBoxStyle1}" x:Name="sitePasswordTB" PreviewKeyDown="SitePasswordTB_PreviewKeyDown"/>
+                <PasswordBox TabIndex="3" Width="250" Style="{DynamicResource PasswordBoxStyle1}" x:Name="sitePasswordTB" PreviewKeyDown="SitePasswordTB_PreviewKeyDown"/>
             </StackPanel>
-            <Button Style="{DynamicResource ButtonStyle1}" x:Name="loginUserButton" Content="Bejelentkezés" Padding="16 8" Margin="30 10" Click="LoginUser_Click"/>
+            <Button TabIndex="4" Style="{DynamicResource ButtonStyle1}" x:Name="loginUserButton" Content="Bejelentkezés" Padding="16 8" Margin="30 10" Click="LoginUser_Click"/>
         </StackPanel>
     </Grid>
 </Window>

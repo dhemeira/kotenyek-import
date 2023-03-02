@@ -115,54 +115,68 @@ namespace Kotenyek
             }
         }
 
-        private void AddNewProduct_Click(object sender, RoutedEventArgs e)
+        private bool AddProductToList()
         {
             StringBuilder hibak = new();
-            //munka>c#>wpf gyakorlo>asztali tenisz gui-ban további minta
-            if (string.IsNullOrWhiteSpace(productName.Text)) hibak.AppendLine("Nincs megadva a termék neve");
+            if (string.IsNullOrWhiteSpace(productName.Text))
+            {
+                hibak.AppendLine("Nincs megadva a termék neve");
+                if (!productName.Text.ToUpper().Contains($"({productUID.Text.ToUpper()})")) hibak.AppendLine("A termék neve nem tartalmazza a cikkszámot");
+            }
             if (string.IsNullOrWhiteSpace(productShortDescription.Text)) hibak.AppendLine("Nincs megadva a termék leírása");
-            //    string.IsNullOrWhiteSpace(productDescription.Text) ||
-            //    string.IsNullOrWhiteSpace(productLength.Text) ||
-            //    string.IsNullOrWhiteSpace(productWidth.Text) ||
-            //    string.IsNullOrWhiteSpace(productPrice.Text) ||
-            //    //kategória checkbox pipák kivétel
-            //    string.IsNullOrWhiteSpace(mainView.ImageURL) ||
-            //    //szín radiobutton jelölés kivétel
-            //    //kapható színek checkbox pipák kivétele
-            //    string.IsNullOrWhiteSpace(productUID.Text)
+            if (string.IsNullOrWhiteSpace(productDescription.Text)) hibak.AppendLine("Nincs megadva a termék mosási útmutatója");
+            if (!int.TryParse(productLength.Text, out int length)) hibak.AppendLine("Nincs megadva a termék hossza");
+            if (!int.TryParse(productWidth.Text,out int width)) hibak.AppendLine("Nincs megadva a termék szélessége");
+            if (!int.TryParse(productPrice.Text, out int price)) hibak.AppendLine("Nincs megadva a termék ára");
+            //kategória checkbox
+            if (string.IsNullOrWhiteSpace(mainView.ImageURL)) hibak.AppendLine("Nincsenek megadva a termék képei");
+            //szín radiobutton
+            //kapható színek checkbox
+            if (string.IsNullOrWhiteSpace(productUID.Text)) hibak.AppendLine("Nincs megadva a termék cikkszáma");
+
             string hiba = hibak.ToString();
             if (string.IsNullOrEmpty(hiba))
             {
+                
                 Products.Add(new Product()
                 {
-                    Name = productName.Text,
-                    ShortDescription = productShortDescription.Text,
-                    Description = productDescription.Text,
-                    Length = int.Parse(productLength.Text),
-                    Width = int.Parse(productWidth.Text),
-                    Price = int.Parse(productPrice.Text),
-                    Category = "Kötény", //Kicserélni checkbox valuera
+                    Name = productName.Text.ToUpper(),
+                    ShortDescription = productShortDescription.Text.Replace("\r", ""),
+                    Description = $"Mosási útmutató:\n<img src=\"{productDescription.Text}\" alt=\"Mosási útmutató\" width=\"166\" height=\"30\" class=\"alignnone size-full wp-image-1186\"/>",
+                    Length = length,
+                    Width = width,
+                    Price = price,
+                    Category = "Kötény", //Kicserélni checkbox vagy dropdown valuera
                     Images = mainView.ImageURL,
-                    Color = "Fekete", //Kicserélni radiobutton valuera
+                    Color = "Fekete", //Kicserélni dropdown valuera
                     AvailableColors = "Fekete, Fehér", //Kicserélni checkbox valuera
-                    UID = productUID.Text
+                    UID = productUID.Text.ToUpper()
                 });
+                return true;
+            }
+            else
+            {
+                MessageBox.Show(hiba, "Beviteli hiba");
+                return false;
+            }
+        }
+
+        private void AddNewProduct_Click(object sender, RoutedEventArgs e)
+        {      
+            if (AddProductToList())
+            {
                 productName.Text = "";
                 productShortDescription.Text = "";
                 productDescription.Text = "";
                 productLength.Text = "";
                 productWidth.Text = "";
                 productPrice.Text = "";
-                //kategória checkbox pipák kivétel
+                //kategória checkbox pipák vagy dropdown kivétel
                 mainView.ImageURL = "";
-                //szín radiobutton jelölés kivétel
+                //szín dropdown kivétel
                 //kapható színek checkbox pipák kivétele
                 productUID.Text = "";
-            }
-            else
-            {
-                MessageBox.Show(hiba, "Beviteli hiba");
-            }
+            }         
         }
 
         private void SaveCSV_Click(object sender, RoutedEventArgs e)
@@ -186,7 +200,13 @@ namespace Kotenyek
 
         private void AddNewColor_Click(object sender, RoutedEventArgs e)
         {
-            return;
+            if (AddProductToList())
+            {
+                productName.Text = "";
+                mainView.ImageURL = "";
+                //szín radiobutton jelölés kivétel
+                productUID.Text = "";
+            }
         }
 
         private void LogOut_Click(object sender, RoutedEventArgs e)
