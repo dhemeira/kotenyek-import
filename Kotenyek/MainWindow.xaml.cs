@@ -63,6 +63,7 @@ namespace Kotenyek
                 else
                 {
                     mainDockPanel.IsEnabled = true;
+                    loginSpinner.Visibility = Visibility.Hidden;
                     productName.Focus();
                 }
             }
