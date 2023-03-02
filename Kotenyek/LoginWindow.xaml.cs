@@ -48,21 +48,16 @@ namespace Kotenyek
                         Properties.Settings.Default.AuthToken = responseContent?.Token;
                         Properties.Settings.Default.Save();
                         this.Close();
-                    }
+                    } else if(response == null || response.StatusCode == System.Net.HttpStatusCode.RequestTimeout || response.StatusCode == System.Net.HttpStatusCode.GatewayTimeout)
+                        MessageBox.Show("Az oldal jelenleg nem elérhető, próbáld újra később!", "Hiba");
                     else
-                    {
                         MessageBox.Show("Hibás adatok!", "Hiba");
-                    }
                 }
                 else
-                {
                     MessageBox.Show("Hibás oldal URL!", "Hiba");
-                }
             }
             else
-            {
                 MessageBox.Show("Hibás adatok!", "Hiba");
-            }
             mainLoginStackPanel.IsEnabled = true;
             loginSpinner.Visibility = Visibility.Hidden;
         }
@@ -75,25 +70,19 @@ namespace Kotenyek
         private void SitePasswordTB_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
-            {
                 LoginUser();
-            }
         }
 
         private void SiteURLTB_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
-            {
                 siteUsernameTB.Focus();
-            }
         }
 
         private void SiteUsernameTB_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
-            {
                 sitePasswordTB.Focus();
-            }
         }
     }
 }
