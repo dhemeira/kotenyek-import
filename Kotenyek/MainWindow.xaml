@@ -11,26 +11,32 @@
         Title="Termék feltöltés" Width="970" Height="550" MinWidth="970" MinHeight="550" WindowStartupLocation="CenterScreen" Loaded="MainWindow_Loaded" SnapsToDevicePixels="True" UseLayoutRounding="True">
     <Grid>
         <fa:ImageAwesome x:Name="loginSpinner" Panel.ZIndex="1"  Icon="Spinner" Spin="True" Width="80" Height="80" Visibility="Hidden" />
-        <DockPanel x:Name="mainDockPanel" LastChildFill="True" Margin="20" IsEnabled="False">
+        <DockPanel x:Name="mainDockPanel" LastChildFill="True" Margin="20">
             <DockPanel DockPanel.Dock="Top" LastChildFill="True" Margin="0 0 0 10">
                 <Label DockPanel.Dock="Left" Content="Képek:" Width="130" Margin="0 0 16 0"/>
 
-                <Button TabIndex="2" DockPanel.Dock="Right" Style="{DynamicResource ButtonStyle1}" Margin="5 0" Click="AddImage_Click" Height="34" Width="150" x:Name="imageUploadBT" >
+                <Button TabIndex="2" DockPanel.Dock="Right" Style="{DynamicResource BtnPrimary}" Margin="5 0" Click="AddImage_Click" Height="34" Width="150" x:Name="imageUploadBT" >
                     <fa:ImageAwesome Icon="Spinner" Spin="True" Width="18" Height="18"/>
                 </Button>
                 <TextBox TabIndex="1" Style="{DynamicResource TextBoxStyle1}" x:Name="imagePathTB" Text="{Binding Path=ImageURL, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" IsReadOnly="True"/>
             </DockPanel>
 
             <DockPanel DockPanel.Dock="Bottom" LastChildFill="False" Margin="0 10 0 0">
-                <Button x:Name="saveImportBT" TabIndex="10003" DockPanel.Dock="Right" Style="{DynamicResource ButtonStyle1}" Content="Import fájl mentése" Click="SaveCSV_Click" Padding="16 8" Margin="10 0 0 0" FontWeight="Bold" Background="Green" />
-                <Button x:Name="addAndNewBT" TabIndex="10002" DockPanel.Dock="Right" Style="{DynamicResource ButtonStyle1}" Content="Hozzáadás és Új termék" Click="AddNewProduct_Click" Padding="16 8" Margin="10 0 0 0" />
-                <Button x:Name="addAndColorBT" TabIndex="10001" DockPanel.Dock="Right" Style="{DynamicResource ButtonStyle1}" Content="Hozzáadás és Új szín" Click="AddNewColor_Click" Padding="16 8" Margin="10 0 0 0" />
-                <Button x:Name="logOutBT" IsTabStop="False" DockPanel.Dock="Left" Style="{DynamicResource ButtonStyle1}" Content="Kijelentkezés" Click="LogOut_Click" Padding="16 8" Margin="0 0 10 0" Background="Tomato" />
+                <Button x:Name="saveImportBT" TabIndex="10003" DockPanel.Dock="Right" Style="{DynamicResource BtnSuccess}" Content="Import fájl mentése" Click="SaveCSV_Click" Padding="16 8" Margin="10 0 0 0" FontWeight="Bold" />
+                <Button x:Name="addAndNewBT" TabIndex="10002" DockPanel.Dock="Right" Style="{DynamicResource BtnPrimary}" Content="Hozzáadás és Új termék" Click="AddNewProduct_Click" Padding="16 8" Margin="10 0 0 0" />
+                <Button x:Name="addAndColorBT" TabIndex="10001" DockPanel.Dock="Right" Style="{DynamicResource BtnPrimary}" Content="Hozzáadás és Új szín" Click="AddNewColor_Click" Padding="16 8" Margin="10 0 0 0"/>
+                <Button x:Name="logOutBT" IsTabStop="False" DockPanel.Dock="Left" Style="{DynamicResource BtnDanger}" Content="Kijelentkezés" Click="LogOut_Click" Padding="16 8" Margin="0 0 10 0" />
             </DockPanel>
 
             <StackPanel DockPanel.Dock="Left" Orientation="Vertical" Margin="0 0 10 0">
                 <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                    <Label Content="Név:" Width="130" Margin="0 0 16 0"/>
+                    <Label Width="130" Margin="0 0 16 0">
+                        <TextBlock Text="Név: *">
+                            <TextBlock.TextEffects>
+                                <TextEffect PositionStart="5" PositionCount="1" Foreground="Red"/>
+                            </TextBlock.TextEffects>
+                        </TextBlock>
+                    </Label>
                     <TextBox TabIndex="3" Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productName" VerticalContentAlignment="Center" IsReadOnly="False"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
@@ -38,15 +44,33 @@
                     <TextBox TabIndex="4" Style="{DynamicResource TextBoxStyle1}" Height="155" Width="300" x:Name="productShortDescription" VerticalContentAlignment="Center" IsReadOnly="False" AcceptsReturn="true"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                    <Label Content="Ár:" Width="130" Margin="0 0 16 0"/>
+                    <Label Width="130" Margin="0 0 16 0">
+                        <TextBlock Text="Ár: *">
+                            <TextBlock.TextEffects>
+                                <TextEffect PositionStart="4" PositionCount="1" Foreground="Red"/>
+                            </TextBlock.TextEffects>
+                        </TextBlock>
+                    </Label>
                     <TextBox TabIndex="5" Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productPrice" VerticalContentAlignment="Center" IsReadOnly="False"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                    <Label Content="Kategória:" Width="130" Margin="0 0 16 0"/>
+                    <Label Width="130" Margin="0 0 16 0">
+                        <TextBlock Text="Kategória: *">
+                            <TextBlock.TextEffects>
+                                <TextEffect PositionStart="11" PositionCount="1" Foreground="Red"/>
+                            </TextBlock.TextEffects>
+                        </TextBlock>
+                    </Label>
                     <!--checkbox-->
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                    <Label Content="Cikkszám:" Width="130" Margin="0 0 16 0"/>
+                    <Label Width="130" Margin="0 0 16 0">
+                        <TextBlock Text="Cikkszám: *">
+                            <TextBlock.TextEffects>
+                                <TextEffect PositionStart="10" PositionCount="1" Foreground="Red"/>
+                            </TextBlock.TextEffects>
+                        </TextBlock>
+                    </Label>
                     <TextBox TabIndex="100" Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productUID" VerticalContentAlignment="Center" IsReadOnly="False"/>
                 </StackPanel>
             </StackPanel>

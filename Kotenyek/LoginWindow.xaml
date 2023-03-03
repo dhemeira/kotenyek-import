@@ -22,7 +22,7 @@
                 <Label Content="Jelszó:" Width="100" Margin="0 0 16 0"/>
                 <PasswordBox TabIndex="3" Width="250" Style="{DynamicResource PasswordBoxStyle1}" x:Name="sitePasswordTB" PreviewKeyDown="SitePasswordTB_PreviewKeyDown"/>
             </StackPanel>
-            <Button TabIndex="4" Style="{DynamicResource ButtonStyle1}" x:Name="loginUserButton" Content="Bejelentkezés" Padding="16 8" Margin="30 10" Click="LoginUser_Click"/>
+            <Button TabIndex="4" Style="{DynamicResource BtnPrimary}" x:Name="loginUserButton" Content="Bejelentkezés" Padding="16 8" Margin="30 10" Click="LoginUser_Click"/>
         </StackPanel>
     </Grid>
 </Window>

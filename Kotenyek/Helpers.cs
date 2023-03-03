@@ -31,17 +31,32 @@ namespace Kotenyek
 
     public class Product
     {
-        public string? Name { get; set; }
-        public string? ShortDescription { get; set; }
-        public string? Description { get; set; }
+        public string Name { get; set; }
+        public string ShortDescription { get; set; }
+        public string Description { get; set; }
         public int Length { get; set; }
         public int Width { get; set; }
         public int Price { get; set; }
-        public string? Category { get; set; }
-        public string? Images { get; set; }
-        public string? Color { get; set; }
-        public string? AvailableColors { get; set; }
-        public string? UID { get; set; }
+        public string Category { get; set; }
+        public string Images { get; set; }
+        public string Color { get; set; }
+        public string AvailableColors { get; set; }
+        public string UID { get; set; }
+
+        public Product(string name, string shortdescription, string description, int length, int width, int price, string category, string images, string color, string availablecolors, string uid)
+        {
+            Name = name;
+            ShortDescription = shortdescription;
+            Description = description;
+            Length = length;
+            Width = width;
+            Price = price;
+            Category = category;
+            Images = images;
+            Color = color;
+            AvailableColors = availablecolors;
+            UID = uid;
+        }
     }
 
     public class TokenResponse
