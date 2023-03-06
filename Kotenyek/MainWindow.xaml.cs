@@ -41,14 +41,17 @@ namespace Kotenyek
         {
             await LoginUser();
 
-            await LoadDataToList(mainView.Categories, $"{Properties.Settings.Default.SiteURL}/wp-json/wc/v3/products/categories");
-            await LoadDataToList(mainView.AvailableColors, $"{Properties.Settings.Default.SiteURL}/wp-json/wc/v3/products/attributes/9/terms");
-            await LoadDataToList(mainView.Colors, $"{Properties.Settings.Default.SiteURL}/wp-json/wc/v3/products/attributes/1/terms");
-            this.Categories = mainView.Categories.ToList();
+            if (!IsUserNotLoggedIn)
+            {
+                await LoadDataToList(mainView.Categories, $"{Properties.Settings.Default.SiteURL}/wp-json/wc/v3/products/categories");
+                await LoadDataToList(mainView.AvailableColors, $"{Properties.Settings.Default.SiteURL}/wp-json/wc/v3/products/attributes/9/terms");
+                await LoadDataToList(mainView.Colors, $"{Properties.Settings.Default.SiteURL}/wp-json/wc/v3/products/attributes/1/terms");
+                this.Categories = mainView.Categories.ToList();
 
-            mainDockPanel.IsEnabled = true;
-            loginSpinner.Visibility = Visibility.Hidden;
-            productName.Focus();
+                mainDockPanel.IsEnabled = true;
+                loginSpinner.Visibility = Visibility.Hidden;
+                productName.Focus();
+            }
         }
 
         private static async Task LoadDataToList<T>(ObservableCollection<T> list, string requestUri)
@@ -125,7 +128,6 @@ namespace Kotenyek
                 if (IsUserNotLoggedIn) Application.Current.Shutdown();
                 else
                 {
-                    mainDockPanel.IsEnabled = true;
                     loginSpinner.Visibility = Visibility.Hidden;
                     productName.Focus();
                 }
