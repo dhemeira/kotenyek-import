@@ -5,18 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Kotenyek"
         xmlns:view="clr-namespace:Kotenyek.View"
-        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:fa="http://schemas.fontawesome.com/icons/"
         d:DataContext="{d:DesignInstance Type=view:MainView}"
         mc:Ignorable="d"
         Title="Termék feltöltés" Width="970" Height="550" MinWidth="970" MinHeight="550" WindowStartupLocation="CenterScreen" Loaded="MainWindow_Loaded" SnapsToDevicePixels="True" UseLayoutRounding="True">
     <Grid>
-        <fa:ImageAwesome x:Name="loginSpinner" Panel.ZIndex="1"  Icon="Spinner" Spin="True" Width="80" Height="80" Visibility="Hidden" />
+        <fa:ImageAwesome x:Name="loginSpinner" Panel.ZIndex="1"  Icon="Solid_CircleNotch" Spin="True" Width="80" Height="80" Visibility="Hidden" />
         <DockPanel x:Name="mainDockPanel" LastChildFill="True" Margin="20">
             <DockPanel DockPanel.Dock="Top" LastChildFill="True" Margin="0 0 0 10">
                 <Label DockPanel.Dock="Left" Content="Képek:" Width="130" Margin="0 0 16 0"/>
 
                 <Button TabIndex="2" DockPanel.Dock="Right" Style="{DynamicResource BtnPrimary}" Margin="5 0" Click="AddImage_Click" Height="34" Width="150" x:Name="imageUploadBT" >
-                    <fa:ImageAwesome Icon="Spinner" Spin="True" Width="18" Height="18"/>
+                    <fa:ImageAwesome Icon="Solid_CircleNotch" Spin="True" Width="30" Height="30"/>
                 </Button>
                 <TextBox TabIndex="1" Style="{DynamicResource TextBoxStyle1}" x:Name="imagePathTB" Text="{Binding Path=ImageURL, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" IsReadOnly="True"/>
             </DockPanel>
@@ -53,7 +53,7 @@
                     </Label>
                     <TextBox TabIndex="5" Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productPrice" VerticalContentAlignment="Center" IsReadOnly="False"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <StackPanel x:Name="productCategories" Orientation="Horizontal" Margin="0 0 0 10">
                     <Label Width="130" Margin="0 0 16 0">
                         <TextBlock Text="Kategória: *">
                             <TextBlock.TextEffects>
@@ -61,7 +61,24 @@
                             </TextBlock.TextEffects>
                         </TextBlock>
                     </Label>
-                    <!--checkbox-->
+                    <ItemsControl x:Name="productCategoriesTempltate" IsTabStop="False" ItemsSource="{Binding Path=Categories}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="2" Width="300" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <CheckBox IsEnabled="{Binding Enabled}" IsChecked="{Binding Checked}" TabIndex="6" Content="{Binding Name}" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" >
+                                    <CheckBox.Resources>
+                                        <Style TargetType="{x:Type Border}">
+                                            <Setter Property="CornerRadius" Value="4" />
+                                        </Style>
+                                    </CheckBox.Resources>
+                                </CheckBox>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                     <Label Width="130" Margin="0 0 16 0">
@@ -90,16 +107,28 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                     <Label Content="Szín:" Width="130" Margin="0 0 16 0"/>
-                    <ComboBox TabIndex="1003" ItemContainerStyle="{DynamicResource ComboBoxItemContainerStyle1}" Padding="8" Style="{DynamicResource ComboBoxStyle1}" x:Name="productColor" IsEditable="True" Width="300" IsTextSearchEnabled="True">
-                        <ComboBoxItem></ComboBoxItem>
-                        <ComboBoxItem>Fekete</ComboBoxItem>
-                        <ComboBoxItem>Fehér</ComboBoxItem>
-                        <ComboBoxItem>Szürke</ComboBoxItem>
-                    </ComboBox>
+                    <ComboBox TabIndex="1003" ItemContainerStyle="{DynamicResource ComboBoxItemContainerStyle1}" Padding="8" Style="{DynamicResource ComboBoxStyle1}" x:Name="productColor" Width="300" ItemsSource="{Binding Path=Colors}" DisplayMemberPath="Name" />
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <StackPanel x:Name="productAvailableColors" Orientation="Horizontal" Margin="0 0 0 10">
                     <Label Content="Kapható színek:" Width="130" Margin="0 0 16 0"/>
-                    <!--checkbox-->
+                    <ItemsControl IsTabStop="False" ItemsSource="{Binding Path=AvailableColors}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="3" Width="300" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding Checked}" TabIndex="1004" Content="{Binding Name}" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" >
+                                    <CheckBox.Resources>
+                                        <Style TargetType="{x:Type Border}">
+                                            <Setter Property="CornerRadius" Value="4" />
+                                        </Style>
+                                    </CheckBox.Resources>
+                                </CheckBox>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </StackPanel>
             </StackPanel>
         </DockPanel>

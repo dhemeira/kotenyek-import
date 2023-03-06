@@ -405,7 +405,7 @@
                     <Setter Property="Color" TargetName="shadow" Value="#71000000"/>
                 </Trigger>
                 <Trigger Property="HasItems" Value="false">
-                    <Setter Property="Height" TargetName="dropDownBorder" Value="95"/>
+                    <Setter Property="Height" TargetName="dropDownBorder" Value="125"/>
                 </Trigger>
                 <MultiTrigger>
                     <MultiTrigger.Conditions>
@@ -449,7 +449,7 @@
                     <Setter Property="Color" TargetName="shadow" Value="#71000000"/>
                 </Trigger>
                 <Trigger Property="HasItems" Value="false">
-                    <Setter Property="Height" TargetName="dropDownBorder" Value="95"/>
+                    <Setter Property="MaxHeight" TargetName="dropDownBorder" Value="269.5"/>
                 </Trigger>
                 <MultiTrigger>
                     <MultiTrigger.Conditions>

@@ -7,6 +7,10 @@ using Kotenyek.View;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Net.Http.Json;
+using System.Collections.ObjectModel;
+using System.Windows.Controls;
+using System.Linq;
 
 namespace Kotenyek
 {
@@ -16,11 +20,15 @@ namespace Kotenyek
     public partial class MainWindow : Window
     {
         readonly List<Product> Products = new();
+        List<CategoriesResponse> Categories = new();
+        readonly List<string> checkedColors = new();
+        readonly List<string> checkedCategories = new();
         readonly MainView mainView = new();
-        readonly HttpClient client = new();
+        static readonly HttpClient client = new();
         object Spinner { get; set; }
 
         public static bool IsUserNotLoggedIn => string.IsNullOrWhiteSpace(Properties.Settings.Default.AuthToken) || string.IsNullOrWhiteSpace(Properties.Settings.Default.SiteURL);
+
         public MainWindow()
         {
             InitializeComponent();          
@@ -29,15 +37,52 @@ namespace Kotenyek
             this.Spinner = imageUploadBT.Content;
         }
 
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            LoginUser();
+            await LoginUser();
+
+            await LoadDataToList(mainView.Categories, $"{Properties.Settings.Default.SiteURL}/wp-json/wc/v3/products/categories");
+            await LoadDataToList(mainView.AvailableColors, $"{Properties.Settings.Default.SiteURL}/wp-json/wc/v3/products/attributes/9/terms");
+            await LoadDataToList(mainView.Colors, $"{Properties.Settings.Default.SiteURL}/wp-json/wc/v3/products/attributes/1/terms");
+            this.Categories = mainView.Categories.ToList();
+
+            mainDockPanel.IsEnabled = true;
+            loginSpinner.Visibility = Visibility.Hidden;
+            productName.Focus();
+        }
+
+        private static async Task LoadDataToList<T>(ObservableCollection<T> list, string requestUri)
+        {
+            using var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.AuthToken);
+            var response = await client.SendAsync(request);
+
+            if (response == null)
+            {
+                Helpers.ShowMessage("Az oldal jelenleg nem elérhető, próbáld újra később!", "Hiba");
+                return;
+            }
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var responseContent = await response.Content.ReadFromJsonAsync<List<T>>();
+                if (responseContent != null)
+                {
+                    foreach (var item in responseContent)
+                    {
+                        list.Add(item);
+                    }
+                }
+            }
+            else
+            {
+                Helpers.ShowMessage("Ismeretlen hiba!", "Hiba");
+            }
         }
 
         private async Task ValidateToken()
         {
             var siteURL = Properties.Settings.Default.SiteURL;
-            var request = new HttpRequestMessage(HttpMethod.Post, $"{siteURL}/wp-json/jwt-auth/v1/token/validate");
+            using var request = new HttpRequestMessage(HttpMethod.Post, $"{siteURL}/wp-json/jwt-auth/v1/token/validate");
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.AuthToken);
             var response = await client.SendAsync(request);
 
@@ -64,7 +109,7 @@ namespace Kotenyek
             }
         }
 
-        private async void LoginUser()
+        private async Task LoginUser()
         {
             imageUploadBT.Content = "Képek feltöltése";
             imageUploadBT.IsEnabled = true;
@@ -87,10 +132,7 @@ namespace Kotenyek
             }
             else
             {
-                await ValidateToken();
-                mainDockPanel.IsEnabled = true;
-                loginSpinner.Visibility = Visibility.Hidden;
-                productName.Focus();
+                await ValidateToken();            
             }
         }
  
@@ -114,14 +156,13 @@ namespace Kotenyek
             {
                 await ValidateToken();
 
-                var request = new HttpRequestMessage(HttpMethod.Post, $"{Properties.Settings.Default.SiteURL}/wp-json/wp/v2/media");
+                using var request = new HttpRequestMessage(HttpMethod.Post, $"{Properties.Settings.Default.SiteURL}/wp-json/wp/v2/media");
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.AuthToken);
-
                 request.Content = new StreamContent(fileDialog.OpenFile());
                 request.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
                 request.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = fileDialog.SafeFileName };
                 var response = await client.SendAsync(request);
-                await HandleResponse(response);                    
+                await HandleResponse(response);
             }
             imageUploadBT.Content = "Képek feltöltése";
             imageUploadBT.IsEnabled = true;
@@ -138,21 +179,18 @@ namespace Kotenyek
             {
                 errors.AppendLine("Nincs megadva a termék neve");
                 
-            } //kötelező
+            }
             else
             {
-                if (!productName.Text.ToUpper().Contains($"({productUID.Text.ToUpper()})")) errors.AppendLine("A termék neve nem tartalmazza a cikkszámot");
+                if (!productName.Text.ToUpper().Contains($" ({productUID.Text.ToUpper()})")) errors.AppendLine("A termék neve nem tartalmazza a cikkszámot");
             }
-            //if (string.IsNullOrWhiteSpace(productShortDescription.Text)) errors.AppendLine("Nincs megadva a termék leírása");
-            //if (string.IsNullOrWhiteSpace(productDescription.Text)) errors.AppendLine("Nincs megadva a termék mosási útmutatója");
             if (!string.IsNullOrWhiteSpace(productLength.Text) && !int.TryParse(productLength.Text, out length)) errors.AppendLine("Nincs megadva a termék hossza");
             else length = -1;
             if (!string.IsNullOrWhiteSpace(productWidth.Text) && !int.TryParse(productWidth.Text, out width)) errors.AppendLine("Nincs megadva a termék szélessége");
             else width = -1;
-            if (!int.TryParse(productPrice.Text, out price)) errors.AppendLine("Nincs megadva a termék ára"); //kötelező
-            //kategória checkbox //kötelező
-            //if (string.IsNullOrWhiteSpace(mainView.ImageURL)) errors.AppendLine("Nincsenek megadva a termék képei");
-            if (string.IsNullOrWhiteSpace(productUID.Text)) errors.AppendLine("Nincs megadva a termék cikkszáma"); //kötelező
+            if (!int.TryParse(productPrice.Text, out price)) errors.AppendLine("Nincs megadva a termék ára");
+            if (checkedCategories.Count == 0) errors.AppendLine("Nincs megadva a termék kategóriája");
+            if (string.IsNullOrWhiteSpace(productUID.Text)) errors.AppendLine("Nincs megadva a termék cikkszáma");
             return errors.ToString();
         }
 
@@ -167,10 +205,10 @@ namespace Kotenyek
                             length,
                             width,
                             price,
-                            "Kötény", //Kicserélni checkbox vagy dropdown valuera
+                            string.Join(", ", checkedCategories.ToArray()),
                             mainView.ImageURL,
-                            "", //Kicserélni dropdown valuera
-                            "", //Kicserélni checkbox valuera
+                            productColor.Text,
+                            string.Join(", ", checkedColors.ToArray()),
                             productUID.Text.ToUpper()));
                 return true;
             }
@@ -191,10 +229,17 @@ namespace Kotenyek
                 productLength.Text = "";
                 productWidth.Text = "";
                 productPrice.Text = "";
-                //kategória checkbox pipák vagy dropdown kivétel
+                foreach (var category in mainView.Categories) {
+                    category.Checked = false;
+                }
+                checkedCategories.Clear();
                 mainView.ImageURL = "";
-                //szín dropdown kivétel
-                //kapható színek checkbox pipák kivétele
+                productColor.Text = "";
+                foreach (var color in mainView.AvailableColors)
+                {
+                    color.Checked = false;
+                }
+                checkedColors.Clear();
                 productUID.Text = "";
             }         
         }
@@ -229,7 +274,7 @@ namespace Kotenyek
             {
                 productName.Text = "";
                 mainView.ImageURL = "";
-                //szín radiobutton jelölés kivétel
+                productColor.Text = "";
                 productUID.Text = "";
             }
         }
@@ -242,12 +287,74 @@ namespace Kotenyek
             }
         }
 
-        private void LogOut()
+        private async void LogOut()
         {
             Properties.Settings.Default.AuthToken = "";
             Properties.Settings.Default.SiteURL = "";
             Properties.Settings.Default.Save();
-            LoginUser();
+            await LoginUser();
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox checkbox)
+            {
+                string name = checkbox.Content.ToString() ?? "";
+                if (productAvailableColors.IsAncestorOf(checkbox))
+                {
+                    checkedColors.Add(name);
+                }
+                if (productCategories.IsAncestorOf(checkbox))
+                {
+                    var parentId = this.Categories.Find(x => x.Name == name)?.Parent;
+                    if (parentId != 0)
+                    {
+                        var parent = this.Categories.Find(x => x.Id == parentId);
+                        parent.CheckedChildCount++;
+                        parent.Checked = true;
+                        parent.Enabled = false;
+                        checkedCategories.Add($"{parent.Name} > {name}");
+                    } else
+                    {
+                        checkedCategories.Add(name);
+                    }               
+                }    
+            }
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox checkbox)
+            {
+                string name = checkbox.Content.ToString() ?? "";
+                if (productAvailableColors.IsAncestorOf(checkbox))
+                {
+                    checkedColors.Remove(name);
+                }
+                if (productCategories.IsAncestorOf(checkbox))
+                {
+                    var parentId = this.Categories.Find(x => x.Name == name)?.Parent;
+                    if (parentId != 0)
+                    {
+                        var parent = this.Categories.Find(x => x.Id == parentId);
+                        parent.CheckedChildCount--;
+                        if (parent.CheckedChildCount <= 0)
+                        {
+                            parent.Checked = false;
+                            parent.Enabled = true;
+                            checkedCategories.Remove($"{parent.Name} > {name}");
+                        }
+                        else
+                        {
+                            checkedCategories.Remove(name);
+                        }
+                    }
+                    else
+                    {
+                        checkedCategories.Remove(name);
+                    }
+                }
+            }
         }
     }
 }

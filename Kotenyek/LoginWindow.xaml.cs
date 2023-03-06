@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using System.Collections.Specialized;
 
 namespace Kotenyek
 {
@@ -16,20 +17,25 @@ namespace Kotenyek
         public LoginWindow()
         {
             InitializeComponent();
-            siteURLTB.Focus();
+            siteURLCB.Focus();
+            if(Properties.Settings.Default.Sites == null)
+            {
+                Properties.Settings.Default.Sites = new StringCollection();
+            }
+            siteURLCB.ItemsSource = Properties.Settings.Default.Sites;
         }
      
         private async Task LoginUser()
         {
             mainLoginStackPanel.IsEnabled = false;
             loginSpinner.Visibility = Visibility.Visible;
-            if (string.IsNullOrWhiteSpace(siteURLTB.Text) || string.IsNullOrWhiteSpace(siteUsernameTB.Text) || string.IsNullOrWhiteSpace(sitePasswordTB.Password))
-            {
+            if (string.IsNullOrWhiteSpace(siteURLCB.Text) || string.IsNullOrWhiteSpace(siteUsernameTB.Text) || string.IsNullOrWhiteSpace(sitePasswordTB.Password))
+                {
                 ShowMessage("Nem töltötted ki az összes mezőt!", "Hiba");
                 return;
             }
 
-            var siteURL = "https://" + siteURLTB.Text.Trim().Split("/").ToList().Find(x => x.Contains(".hu") || x.Contains(".com"));
+            var siteURL = "https://" + siteURLCB.Text.Trim().Split("/").ToList().Find(x => x.Contains(".hu") || x.Contains(".com"));
             if (!siteURL.Contains(".hu") && !siteURL.Contains(".com"))
             {
                 ShowMessage("Hibás oldal URL!", "Hiba");
@@ -67,6 +73,7 @@ namespace Kotenyek
                     var responseContent = await response.Content.ReadFromJsonAsync<TokenResponse>();
                     Properties.Settings.Default.SiteURL = siteURL;
                     Properties.Settings.Default.AuthToken = responseContent?.Token;
+                    if(!Properties.Settings.Default.Sites.Contains(siteURLCB.Text)) Properties.Settings.Default.Sites.Add(siteURLCB.Text);
                     Properties.Settings.Default.Save();
                     this.Close();
                     break;
@@ -93,7 +100,7 @@ namespace Kotenyek
         private async void LoginUser_Click(object sender, RoutedEventArgs e)
         {
             await LoginUser();
-            siteURLTB.Focus();
+            siteURLCB.Focus();
         }
 
         private async void SitePasswordTB_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -101,7 +108,7 @@ namespace Kotenyek
             if (e.Key == Key.Enter)
             {
                 await LoginUser();
-                siteURLTB.Focus();
+                siteURLCB.Focus();
             }           
         }
 

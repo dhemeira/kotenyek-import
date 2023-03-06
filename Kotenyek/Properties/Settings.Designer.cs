@@ -46,5 +46,16 @@ namespace Kotenyek.Properties {
                 this["SiteURL"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection Sites {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["Sites"]));
+            }
+            set {
+                this["Sites"] = value;
+            }
+        }
     }
 }
