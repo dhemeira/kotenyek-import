@@ -1,39 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Shapes;
 
 namespace Kotenyek
 {
     class Helpers
     {
-        public static bool ShowMessage(string message)
+        public static bool ShowMessage(Window owner, string message)
         {
-            //plug the custom dialog here
-            MessageBox.Show(message, "");
-            return true;
-        }
-        public static bool ShowMessage(string message, string title)
-        {
-            //plug the custom dialog here
-            MessageBox.Show(message, title);
-            return true;
-        }
-        public static bool ShowMessage(string message, string title, bool isYesNoDialog)
-        {
-            if (isYesNoDialog)
+            MessageWindow messageWindow = new(message, "", false)
             {
-                //plug the custom dialog here
-                var result = MessageBox.Show(message, title, MessageBoxButton.YesNo);
-                if (result == MessageBoxResult.Yes) return true;
-                else return false;
-            }
-            return ShowMessage(message, title);
+                Owner = owner
+            };
+            return messageWindow.ShowDialog() ?? true;
+        }
+        public static bool ShowMessage(Window owner, string message, string title)
+        {
+            MessageWindow messageWindow = new(message, title, false)
+            {
+                Owner = owner
+            };
+            return messageWindow.ShowDialog() ?? true;
+        }
+        public static bool ShowMessage(Window owner, string message, string title, bool isYesNoDialog)
+        {
+            MessageWindow messageWindow = new(message, title, isYesNoDialog)
+            {
+                Owner = owner
+            };
+            return messageWindow.ShowDialog() ?? false;
         }
     }
 

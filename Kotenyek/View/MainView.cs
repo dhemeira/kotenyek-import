@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Data;
 
 namespace Kotenyek.View
 {
@@ -22,7 +15,7 @@ namespace Kotenyek.View
             set
             {
                 imageURL = value;
-                OnPropertyChanged(nameof(imageURL));
+                OnPropertyChanged(nameof(ImageURL));
             }
         }
 

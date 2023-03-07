@@ -8,7 +8,7 @@
         xmlns:fa="http://schemas.fontawesome.com/icons/"
         d:DataContext="{d:DesignInstance Type=view:MainView}"
         mc:Ignorable="d"
-        Title="Termék feltöltés" Width="970" Height="550" MinWidth="970" MinHeight="550" WindowStartupLocation="CenterScreen" Loaded="MainWindow_Loaded" SnapsToDevicePixels="True" UseLayoutRounding="True">
+        Title="Termék feltöltés" WindowStartupLocation="CenterScreen" Loaded="MainWindow_Loaded" SnapsToDevicePixels="True" UseLayoutRounding="True"  SizeToContent="WidthAndHeight">
     <Grid>
         <fa:ImageAwesome x:Name="loginSpinner" Panel.ZIndex="1"  Icon="Solid_CircleNotch" Spin="True" Width="80" Height="80" Visibility="Hidden" />
         <DockPanel x:Name="mainDockPanel" LastChildFill="True" Margin="20">
@@ -21,7 +21,7 @@
                 <TextBox TabIndex="1" Style="{DynamicResource TextBoxStyle1}" x:Name="imagePathTB" Text="{Binding Path=ImageURL, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" IsReadOnly="True"/>
             </DockPanel>
 
-            <DockPanel DockPanel.Dock="Bottom" LastChildFill="False" Margin="0 10 0 0">
+            <DockPanel DockPanel.Dock="Bottom" LastChildFill="False" Margin="0 20 0 0">
                 <Button x:Name="saveImportBT" TabIndex="10003" DockPanel.Dock="Right" Style="{DynamicResource BtnSuccess}" Content="Import fájl mentése" Click="SaveCSV_Click" Padding="16 8" Margin="10 0 0 0" FontWeight="Bold" />
                 <Button x:Name="addAndNewBT" TabIndex="10002" DockPanel.Dock="Right" Style="{DynamicResource BtnPrimary}" Content="Hozzáadás és Új termék" Click="AddNewProduct_Click" Padding="16 8" Margin="10 0 0 0" />
                 <Button x:Name="addAndColorBT" TabIndex="10001" DockPanel.Dock="Right" Style="{DynamicResource BtnPrimary}" Content="Hozzáadás és Új szín" Click="AddNewColor_Click" Padding="16 8" Margin="10 0 0 0"/>

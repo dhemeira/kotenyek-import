@@ -1,0 +1,19 @@
+﻿<Window x:Class="Kotenyek.MessageWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Kotenyek"
+        mc:Ignorable="d"
+        xmlns:view="clr-namespace:Kotenyek.View"
+        d:DataContext="{d:DesignInstance Type=view:MessageView}"
+        Title="{Binding Path=Title}" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" SnapsToDevicePixels="True" UseLayoutRounding="True" SizeToContent="WidthAndHeight">
+    <StackPanel Margin="10">
+        <TextBlock Width="400" Text="{Binding Path=Message}" TextWrapping="Wrap"/>
+        <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
+            <Button Name="No" IsEnabled="{Binding Path=IsYesNoDialog}"  IsCancel="True" Visibility="{Binding Path=YesNoVisibility}" Content="Nem" Style="{DynamicResource BtnDanger}" Padding="16 8" Margin="0 0 10 0" Click="No_Click"/>
+            <Button Name="Yes" IsDefault="True" IsEnabled="{Binding Path=IsYesNoDialog}" Visibility="{Binding Path=YesNoVisibility}" Content="Igen" Style="{DynamicResource BtnSuccess}" Padding="16 8" Margin="0 0 10 0" Click="Yes_Click"/>
+            <Button Name="Ok" IsEnabled="{Binding Path=IsOkDialog}"  IsDefault="True" Visibility="{Binding Path=OkVisibility}" Content="Ok" Style="{DynamicResource BtnPrimary}" Padding="16 8" Margin="0 0 10 0" Click="Ok_Click"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

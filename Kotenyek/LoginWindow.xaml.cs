@@ -92,7 +92,7 @@ namespace Kotenyek
 
         private void ShowMessage(string message, string title)
         {
-            Helpers.ShowMessage(message, title);
+            Helpers.ShowMessage(this, message, title);
             mainLoginStackPanel.IsEnabled = true;
             loginSpinner.Visibility = Visibility.Hidden;
         }
