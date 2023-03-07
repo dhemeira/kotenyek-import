@@ -11,6 +11,7 @@ using System.Net.Http.Json;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using System.Linq;
+using System.Diagnostics;
 
 namespace Kotenyek
 {
@@ -377,6 +378,28 @@ namespace Kotenyek
                     checkedCategories.Remove(name);
                 }
             }
+        }
+
+        private void AddSymbol_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button)
+            {
+                if(button.Name == "AddSquaredSymbol")
+                productShortDescription.Text += "<sup>2</sup> ";
+
+                if (button.Name == "AddCubedSymbol")
+                    productShortDescription.Text += "<sup>3</sup> ";
+            }
+        }
+
+        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        {
+            var sInfo = new ProcessStartInfo(e.Uri.AbsoluteUri)
+            {
+                UseShellExecute = true,
+            };
+            Process.Start(sInfo);
+            e.Handled = true;
         }
     }
 }
