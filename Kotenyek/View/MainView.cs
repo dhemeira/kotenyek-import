@@ -16,8 +16,10 @@ namespace Kotenyek.View
             {
                 imageURL = value;
                 OnPropertyChanged(nameof(ImageURL));
+                OnPropertyChanged(nameof(ImageCount));
             }
         }
+        public string ImageCount => $"Képek ({(ImageURL == "" ? 0 : ImageURL.Split(',').Length)}):";
 
         public MainView()
         {            

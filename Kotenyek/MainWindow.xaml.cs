@@ -157,7 +157,8 @@ namespace Kotenyek
             var fileDialog = new OpenFileDialog()
             {
                 Filter = "Képek (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png",
-                Title = "KÖTÉNYEK kép feltöltés"
+                Title = "KÖTÉNYEK kép feltöltés",
+                Multiselect = true,
             };
 
             bool? result = fileDialog.ShowDialog();
@@ -165,14 +166,18 @@ namespace Kotenyek
             if (result == true)
             {
                 await ValidateToken();
-
-                using var request = new HttpRequestMessage(HttpMethod.Post, $"{Properties.Settings.Default.SiteURL}/wp-json/wp/v2/media");
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.AuthToken);
-                request.Content = new StreamContent(fileDialog.OpenFile());
-                request.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
-                request.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = fileDialog.SafeFileName };
-                var response = await client.SendAsync(request);
-                await HandleResponse(response);
+                foreach (var filename in fileDialog.FileNames)
+                {
+                    using var request = new HttpRequestMessage(HttpMethod.Post, $"{Properties.Settings.Default.SiteURL}/wp-json/wp/v2/media");
+                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.AuthToken);
+                    FileStream FS = new(filename, FileMode.Open, FileAccess.Read);
+                    request.Content = new StreamContent(FS);
+                    request.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
+                    var teszt = Path.GetFileName(filename);
+                    request.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = Path.GetFileName(filename)};
+                    var response = await client.SendAsync(request);
+                    await HandleResponse(response);
+                }              
             }
             imageUploadBT.Content = "Képek feltöltése";
             imageUploadBT.IsEnabled = true;
