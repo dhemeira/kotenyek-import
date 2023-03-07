@@ -10,7 +10,7 @@
         Title="{Binding Path=Title}" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" SnapsToDevicePixels="True" UseLayoutRounding="True" SizeToContent="WidthAndHeight">
     <StackPanel Margin="10">
         <TextBlock Width="400" Text="{Binding Path=Message}" TextWrapping="Wrap"/>
-        <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
+        <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Margin="0 10 0 0">
             <Button Name="No" IsEnabled="{Binding Path=IsYesNoDialog}"  IsCancel="True" Visibility="{Binding Path=YesNoVisibility}" Content="Nem" Style="{DynamicResource BtnDanger}" Padding="16 8" Margin="0 0 10 0" Click="No_Click"/>
             <Button Name="Yes" IsDefault="True" IsEnabled="{Binding Path=IsYesNoDialog}" Visibility="{Binding Path=YesNoVisibility}" Content="Igen" Style="{DynamicResource BtnSuccess}" Padding="16 8" Margin="0 0 10 0" Click="Yes_Click"/>
             <Button Name="Ok" IsEnabled="{Binding Path=IsOkDialog}"  IsDefault="True" Visibility="{Binding Path=OkVisibility}" Content="Ok" Style="{DynamicResource BtnPrimary}" Padding="16 8" Margin="0 0 10 0" Click="Ok_Click"/>

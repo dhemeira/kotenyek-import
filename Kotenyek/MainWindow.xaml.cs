@@ -219,10 +219,10 @@ namespace Kotenyek
                             length,
                             width,
                             price,
-                            string.Join(", ", checkedCategories.ToArray()),
+                            string.Join(", ", checkedCategories),
                             mainView.ImageURL,
                             productColor.Text,
-                            string.Join(", ", checkedColors.ToArray()),
+                            string.Join(", ", checkedColors),
                             productUID.Text.ToUpper()));
                 return true;
             }
@@ -261,6 +261,12 @@ namespace Kotenyek
 
         private void SaveCSV_Click(object sender, RoutedEventArgs e)
         {
+            if (Products.Count <= 0) {
+                Helpers.ShowMessage(this, "Még nem adtál hozzá terméket a listához", "Import fájl mentése", false);
+                return;
+            }
+            if (!Helpers.ShowMessage(this, $"Biztosan szeretnéd menteni az import fájlt?\nA következő termékek kerülnek hozzáadásra:\n\n{string.Join("\n", Products.Select(x => x.Name))}", "Import fájl mentése", true))
+                return;
             mainDockPanel.IsEnabled = false;
             loginSpinner.Visibility = Visibility.Visible;
             SaveFileDialog saveFileDialog = new()
@@ -277,6 +283,7 @@ namespace Kotenyek
                     streamWriter.WriteLine($"{item.Name};{item.ShortDescription};{item.Description};{(item.Length >= 0 ? item.Length : "")};{(item.Width >= 0 ? item.Width : "")};{item.Price};{item.Category};{item.Images};Szín;{item.Color};1;Kapható színek;{item.AvailableColors};1;{item.UID}");
                 }
                 streamWriter.Close();
+                Products.Clear();
             }
             mainDockPanel.IsEnabled = true;
             loginSpinner.Visibility = Visibility.Hidden;
