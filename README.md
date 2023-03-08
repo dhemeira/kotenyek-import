@@ -18,7 +18,7 @@ Nem szükséges minden megnyitáskor bejelentkezni abban az esetben, ha használ
       <li>a legördülő listából válaszd ki a már előzetesen megadott linket</li>
     </ol>
   - Ha csak egyszerűen kimásolnád, akkor a `https://weboldal.hu/` formátum is támogatva van
-  - Jelenleg csak .hu vagy .com használata lehetséges
+  - Jelenleg csak `.hu` vagy `.com` használata lehetséges
 - Ezután add meg az oldalon is használt _`felhasználóneved`_
 - Majd az oldalon is használt _`jelszavad`_
 - Legvégül nyomj rá a `Bejelentkezés` gombra
@@ -31,7 +31,7 @@ Ha valamit hibásan adtál meg, vagy a szerverrel nem vehető fel a kapcsolat, a
 
 **Ha háromszor hibásan adod meg a jelszavad, az oldal 10 percig nem enged újrapróbálkozni.**
 
-A felléphető hibákról, hibaüzenetekről a [Hibák és hibaüzenetek](#hibak) bekezdésben olvashatsz.
+A felléphető hibákról, hibaüzenetekről a [Hibák és hibaüzenetek](#hibák-és-hibaüzenetek) bekezdésben olvashatsz.
 
 ## Az alkalmazás használata
 
@@ -78,7 +78,7 @@ Ezen felül elérhető a szövegdoboz alatt 2 további gomb is, ezek az x<sup>2<
 - Azaz ha például négyzetmétert (m<sup>2</sup>) szeretnénk írni, annak a következőképp kell megjelennie a szövegdobozban: `m<sup>2</sup>`
 - Kézzel bevihető bármilyen más hatvány is, legyen ez szám, betű, vagy akár hosszabb szöveg is, ehhez a fentebb feltüntetett formát szükséges használni: `<sup>A szám, betű, vagy szöveg ami a felső indexben megjelenjen</sup>`
 
-A fent említett speciális karakterekről, jelölésekről részletesebben a leírás végén vagy [ide kattintva](#import-fajl) olvashatsz.
+A fent említett speciális karakterekről, jelölésekről részletesebben a leírás végén vagy [ide kattintva](#az-import-fájl-csv-fájl-kinézete-speciális-karakterek-jelölése) olvashatsz.
 
 ### Ár
 
@@ -122,6 +122,6 @@ A további mezők kitöltése **nem** kötelező.
 
 ## Példák
 
-## <a name="hibak">Hibák és hibaüzenetek</a>
+## Hibák és hibaüzenetek
 
-## <a name="import-fajl">Az import fájl (.csv fájl) kinézete, speciális karakterek jelölése</a>
+## Az import fájl (.csv fájl) kinézete, speciális karakterek jelölése
