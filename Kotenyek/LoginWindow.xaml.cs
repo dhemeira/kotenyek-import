@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using System.Collections.Specialized;
+using System.Windows.Controls;
 
 namespace Kotenyek
 {
@@ -16,8 +17,7 @@ namespace Kotenyek
     {
         public LoginWindow()
         {
-            InitializeComponent();
-            siteURLCB.Focus();
+            InitializeComponent();         
             if(Properties.Settings.Default.Sites == null)
             {
                 Properties.Settings.Default.Sites = new StringCollection();
@@ -122,6 +122,16 @@ namespace Kotenyek
         {
             if (e.Key == Key.Enter)
                 sitePasswordTB.Focus();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var textBox = (siteURLCB.Template.FindName("PART_EditableTextBox", siteURLCB) as TextBox);
+            if (textBox != null)
+            {
+                textBox.Focus();
+                textBox.SelectionStart = textBox.Text.Length;
+            }
         }
     }
 }

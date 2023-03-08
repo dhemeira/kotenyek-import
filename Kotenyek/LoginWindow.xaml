@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Kotenyek"
         mc:Ignorable="d"
         xmlns:fa="http://schemas.fontawesome.com/icons/"
-        Title="Bejelentkezés" Width="450" Height="280" MinHeight="280" MinWidth="450" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" SnapsToDevicePixels="True" UseLayoutRounding="True">
+        Title="Bejelentkezés" Width="450" Height="280" MinHeight="280" MinWidth="450" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" SnapsToDevicePixels="True" UseLayoutRounding="True" Loaded="Window_Loaded">
     <Grid>
         <fa:ImageAwesome x:Name="loginSpinner" Panel.ZIndex="1"  Icon="Solid_CircleNotch" Spin="True" Width="40" Height="40" Visibility="Hidden" />
         <StackPanel x:Name="mainLoginStackPanel" Orientation="Vertical" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Center">
