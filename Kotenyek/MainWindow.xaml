@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Kotenyek"
         xmlns:view="clr-namespace:Kotenyek.View"
         xmlns:fa="http://schemas.fontawesome.com/icons/"
-        d:DataContext="{d:DesignInstance Type=view:MainView}"
+        d:DataContext="{d:DesignInstance Type=view:MainView, IsDesignTimeCreatable=True}"
         mc:Ignorable="d"
         Title="Termék feltöltés" WindowStartupLocation="CenterScreen" Loaded="MainWindow_Loaded" SnapsToDevicePixels="True" UseLayoutRounding="True"  SizeToContent="WidthAndHeight">
     <Grid>
