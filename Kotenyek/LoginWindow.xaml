@@ -24,5 +24,11 @@
             </StackPanel>
             <Button TabIndex="4" Style="{DynamicResource BtnPrimary}" x:Name="loginUserButton" Content="Bejelentkezés" Padding="16 8" Margin="30 10" Click="LoginUser_Click"/>
         </StackPanel>
+        <TextBlock Padding="5 0 0 0" VerticalAlignment="Bottom" Margin="0 10">
+                    Ha segítségre van szükséged olvasd el a
+                    <Hyperlink Focusable="False" NavigateUri="https://github.com/dhemeira/kotenyek-import/blob/master/README.md" RequestNavigate="Hyperlink_RequestNavigate">
+        Használati útmutatót
+    </Hyperlink>
+        </TextBlock>
     </Grid>
 </Window>

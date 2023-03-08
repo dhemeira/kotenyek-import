@@ -28,10 +28,10 @@
             <DockPanel DockPanel.Dock="Bottom" LastChildFill="False" Margin="0 20 0 0">
                 <TextBlock Padding="5 0 0 0" DockPanel.Dock="Top" Margin="0 10">
                     Ha segítségre van szükséged olvasd el a
-                    <Hyperlink NavigateUri="https://github.com/dhemeira/kotenyek-import/blob/master/README.md" RequestNavigate="Hyperlink_RequestNavigate">
+                    <Hyperlink Focusable="False" NavigateUri="https://github.com/dhemeira/kotenyek-import/blob/master/README.md" RequestNavigate="Hyperlink_RequestNavigate">
         Használati útmutatót
     </Hyperlink>
-                    </TextBlock>
+                </TextBlock>
                 <Button x:Name="saveImportBT" TabIndex="10003" DockPanel.Dock="Right" Style="{DynamicResource BtnSuccess}" Content="Import fájl mentése" Click="SaveCSV_Click" Padding="16 8" Margin="10 0 0 0" FontWeight="Bold" />
                 <Button x:Name="addAndNewBT" TabIndex="10002" DockPanel.Dock="Right" Style="{DynamicResource BtnPrimary}" Content="Hozzáadás és Új termék" Click="AddNewProduct_Click" Padding="16 8" Margin="10 0 0 0" />
                 <Button x:Name="addAndColorBT" TabIndex="10001" DockPanel.Dock="Right" Style="{DynamicResource BtnPrimary}" Content="Hozzáadás és Új szín" Click="AddNewColor_Click" Padding="16 8" Margin="10 0 0 0"/>

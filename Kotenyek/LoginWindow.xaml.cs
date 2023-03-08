@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Collections.Specialized;
 using System.Windows.Controls;
 using System;
+using System.Diagnostics;
 
 namespace Kotenyek
 {
@@ -158,6 +159,16 @@ namespace Kotenyek
                 textBox.Focus();
                 textBox.SelectionStart = textBox.Text.Length;
             }
+        }
+
+        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        {
+            var sInfo = new ProcessStartInfo(e.Uri.AbsoluteUri)
+            {
+                UseShellExecute = true,
+            };
+            Process.Start(sInfo);
+            e.Handled = true;
         }
     }
 }
