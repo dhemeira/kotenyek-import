@@ -12,16 +12,21 @@
     <Grid>
         <fa:ImageAwesome x:Name="loginSpinner" Panel.ZIndex="1"  Icon="Solid_CircleNotch" Spin="True" Width="80" Height="80" Visibility="Hidden" />
         <DockPanel x:Name="mainDockPanel" LastChildFill="True" Margin="20">
-            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0 0 0 10">
-                <Label Content="{Binding Path=ImageCount, UpdateSourceTrigger=PropertyChanged}" Width="130" Margin="0 0 16 0"/>
-                <TextBox ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Disabled" TabIndex="1" Style="{DynamicResource TextBoxStyle1}" x:Name="imagePathTB" Text="{Binding Path=ImageURL, UpdateSourceTrigger=PropertyChanged}" Padding="0 0 0 5" IsReadOnly="True" Width="612"/>
-                <Button TabIndex="2" Style="{DynamicResource BtnPrimary}" VerticalAlignment="Top" Margin="5 0" Click="AddImage_Click" Height="34" Width="150" x:Name="imageUploadBT" >
+            <Grid DockPanel.Dock="Top" Margin="0 0 0 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Content="{Binding Path=ImageCount, UpdateSourceTrigger=PropertyChanged}" Width="{Binding Path=LabelWidth}" Margin="0 0 16 0"/>
+                <TextBox Grid.Column="1" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Disabled" TabIndex="1" Style="{DynamicResource TextBoxStyle1}" x:Name="imagePathTB" Text="{Binding Path=ImageURL, UpdateSourceTrigger=PropertyChanged}" Padding="0 0 0 5" IsReadOnly="True" MinWidth="{Binding Path=InputMinWidth}"/>
+                <Button Grid.Column="2" TabIndex="2" Style="{DynamicResource BtnPrimary}" VerticalAlignment="Top" Margin="5 0 0 0" Click="AddImage_Click" Height="56" Width="150" x:Name="imageUploadBT" >
                     <fa:ImageAwesome Icon="Solid_CircleNotch" Spin="True" Width="30" Height="30" />
                 </Button>
-            </StackPanel>
-
+            </Grid>
+            
             <DockPanel DockPanel.Dock="Bottom" LastChildFill="False" Margin="0 20 0 0">
-                <TextBlock DockPanel.Dock="Top" Margin="0 10">
+                <TextBlock Padding="5 0 0 0" DockPanel.Dock="Top" Margin="0 10">
                     Ha segítségre van szükséged olvasd el a
                     <Hyperlink NavigateUri="https://github.com/dhemeira/kotenyek-import/blob/master/README.md" RequestNavigate="Hyperlink_RequestNavigate">
         Használati útmutatót
@@ -30,118 +35,168 @@
                 <Button x:Name="saveImportBT" TabIndex="10003" DockPanel.Dock="Right" Style="{DynamicResource BtnSuccess}" Content="Import fájl mentése" Click="SaveCSV_Click" Padding="16 8" Margin="10 0 0 0" FontWeight="Bold" />
                 <Button x:Name="addAndNewBT" TabIndex="10002" DockPanel.Dock="Right" Style="{DynamicResource BtnPrimary}" Content="Hozzáadás és Új termék" Click="AddNewProduct_Click" Padding="16 8" Margin="10 0 0 0" />
                 <Button x:Name="addAndColorBT" TabIndex="10001" DockPanel.Dock="Right" Style="{DynamicResource BtnPrimary}" Content="Hozzáadás és Új szín" Click="AddNewColor_Click" Padding="16 8" Margin="10 0 0 0"/>
-                <Button x:Name="logOutBT" IsTabStop="False" DockPanel.Dock="Left" Style="{DynamicResource BtnDanger}" Content="Kijelentkezés" Click="LogOut_Click" Padding="16 8" Margin="0 0 10 0" />
+                <Button x:Name="logOutBT" IsTabStop="False" DockPanel.Dock="Left" Style="{DynamicResource BtnDanger}" Content="Kijelentkezés" Click="LogOut_Click" Padding="16 8" Margin="5 0 10 0" />
             </DockPanel>
 
-            <StackPanel DockPanel.Dock="Left" Orientation="Vertical" Margin="0 0 10 0">
-                <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                    <Label Width="130" Margin="0 0 16 0">
-                        <TextBlock Text="Név: *">
-                            <TextBlock.TextEffects>
-                                <TextEffect PositionStart="5" PositionCount="1" Foreground="Red"/>
-                            </TextBlock.TextEffects>
-                        </TextBlock>
-                    </Label>
-                    <TextBox TabIndex="3" Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productName" VerticalContentAlignment="Center" IsReadOnly="False"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                    <Label Content="Leírás:" Width="130" Margin="0 0 16 0"/>
-                    <StackPanel>
-                        <TextBox TabIndex="4" Style="{DynamicResource TextBoxStyle1}" Height="155" Width="300" x:Name="productShortDescription" VerticalContentAlignment="Center" IsReadOnly="False" AcceptsReturn="true"/>
-                        <StackPanel Orientation="Horizontal">
-                            <Button Name="AddSquaredSymbol" Content="x²" TabIndex="4" Style="{DynamicResource BtnPrimary}" Click="AddSymbol_Click" Height="24" Padding="16 0" Margin="0 0 0 0" />
-                            <Button Name="AddCubedSymbol" Content="x³" TabIndex="4" Style="{DynamicResource BtnPrimary}" Click="AddSymbol_Click" Height="24" Padding="16 0" Margin="2 0 0 0" />
+            <Grid DockPanel.Dock="Left">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel HorizontalAlignment="Stretch" Grid.Column="0" Orientation="Vertical" Margin="0 0 10 0">
+                    <Grid Margin="0 0 0 10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Width="{Binding Path=LabelWidth}" Margin="0 0 16 0">
+                            <TextBlock Text="Név: *">
+                                <TextBlock.TextEffects>
+                                    <TextEffect PositionStart="5" PositionCount="1" Foreground="Red"/>
+                                </TextBlock.TextEffects>
+                            </TextBlock>
+                        </Label>
+                        <TextBox MinWidth="{Binding Path=InputMinWidth}" Grid.Column="1" TabIndex="3" Style="{DynamicResource TextBoxStyle1}" x:Name="productName" VerticalContentAlignment="Center" IsReadOnly="False"/>
+                    </Grid>
+                    <Grid Margin="0 0 0 10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Leírás:" Width="{Binding Path=LabelWidth}" Margin="0 0 16 0"/>
+                        <StackPanel Grid.Column="1">
+                            <TextBox TabIndex="4" Style="{DynamicResource TextBoxStyle1}" Height="155" MinWidth="{Binding Path=InputMinWidth}" x:Name="productShortDescription" VerticalContentAlignment="Center" IsReadOnly="False" AcceptsReturn="true"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="0" Name="AddSquaredSymbol" Content="x²" TabIndex="4" Style="{DynamicResource BtnPrimary}" Click="AddSymbol_Click" Height="24" Padding="16 0" Margin="0 0 0 0" />
+                                <Button Grid.Column="1" Name="AddCubedSymbol" Content="x³" TabIndex="4" Style="{DynamicResource BtnPrimary}" Click="AddSymbol_Click" Height="24" Padding="16 0" Margin="2 0 0 0" />
+                            </Grid>
                         </StackPanel>
-                    </StackPanel>
+                    </Grid>
+                    <Grid Margin="0 0 0 10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Width="{Binding Path=LabelWidth}" Margin="0 0 16 0">
+                            <TextBlock Text="Ár: *">
+                                <TextBlock.TextEffects>
+                                    <TextEffect PositionStart="4" PositionCount="1" Foreground="Red"/>
+                                </TextBlock.TextEffects>
+                            </TextBlock>
+                        </Label>
+                        <TextBox Grid.Column="1" TabIndex="5" Style="{DynamicResource TextBoxStyle1}" MinWidth="{Binding Path=InputMinWidth}" x:Name="productPrice" VerticalContentAlignment="Center" IsReadOnly="False"/>
+                    </Grid>
+                    <Grid x:Name="productCategories" Margin="0 0 0 10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Width="{Binding Path=LabelWidth}" Margin="0 0 16 0">
+                            <TextBlock Text="Kategória: *">
+                                <TextBlock.TextEffects>
+                                    <TextEffect PositionStart="11" PositionCount="1" Foreground="Red"/>
+                                </TextBlock.TextEffects>
+                            </TextBlock>
+                        </Label>
+                        <ItemsControl Grid.Column="1" x:Name="productCategoriesTempltate" IsTabStop="False" ItemsSource="{Binding Path=Categories}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="2" MinWidth="{Binding Path=InputMinWidth}" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsEnabled="{Binding Enabled}" IsChecked="{Binding Checked}" TabIndex="6" Content="{Binding Name}" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" >
+                                        <CheckBox.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="4" />
+                                            </Style>
+                                        </CheckBox.Resources>
+                                    </CheckBox>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                    <Grid Margin="0 0 0 10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Width="{Binding Path=LabelWidth}" Margin="0 0 16 0">
+                            <TextBlock Text="Cikkszám: *">
+                                <TextBlock.TextEffects>
+                                    <TextEffect PositionStart="10" PositionCount="1" Foreground="Red"/>
+                                </TextBlock.TextEffects>
+                            </TextBlock>
+                        </Label>
+                        <TextBox Grid.Column="1" TabIndex="100" Style="{DynamicResource TextBoxStyle1}" MinWidth="{Binding Path=InputMinWidth}" x:Name="productUID" VerticalContentAlignment="Center" IsReadOnly="False"/>
+                    </Grid>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                    <Label Width="130" Margin="0 0 16 0">
-                        <TextBlock Text="Ár: *">
-                            <TextBlock.TextEffects>
-                                <TextEffect PositionStart="4" PositionCount="1" Foreground="Red"/>
-                            </TextBlock.TextEffects>
-                        </TextBlock>
-                    </Label>
-                    <TextBox TabIndex="5" Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productPrice" VerticalContentAlignment="Center" IsReadOnly="False"/>
-                </StackPanel>
-                <StackPanel x:Name="productCategories" Orientation="Horizontal" Margin="0 0 0 10">
-                    <Label Width="130" Margin="0 0 16 0">
-                        <TextBlock Text="Kategória: *">
-                            <TextBlock.TextEffects>
-                                <TextEffect PositionStart="11" PositionCount="1" Foreground="Red"/>
-                            </TextBlock.TextEffects>
-                        </TextBlock>
-                    </Label>
-                    <ItemsControl x:Name="productCategoriesTempltate" IsTabStop="False" ItemsSource="{Binding Path=Categories}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <UniformGrid Columns="2" Width="300" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <CheckBox IsEnabled="{Binding Enabled}" IsChecked="{Binding Checked}" TabIndex="6" Content="{Binding Name}" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" >
-                                    <CheckBox.Resources>
-                                        <Style TargetType="{x:Type Border}">
-                                            <Setter Property="CornerRadius" Value="4" />
-                                        </Style>
-                                    </CheckBox.Resources>
-                                </CheckBox>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                    <Label Width="130" Margin="0 0 16 0">
-                        <TextBlock Text="Cikkszám: *">
-                            <TextBlock.TextEffects>
-                                <TextEffect PositionStart="10" PositionCount="1" Foreground="Red"/>
-                            </TextBlock.TextEffects>
-                        </TextBlock>
-                    </Label>
-                    <TextBox TabIndex="100" Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productUID" VerticalContentAlignment="Center" IsReadOnly="False"/>
-                </StackPanel>
-            </StackPanel>
 
-            <StackPanel DockPanel.Dock="Right" Orientation="Vertical" Margin="10 0 0 0">
-                <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                    <Label Content="Mosási útmutató:" Width="130" Margin="0 0 16 0"/>
-                    <TextBox TabIndex="1000" Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productDescription" VerticalContentAlignment="Center" IsReadOnly="False"/>
+                <StackPanel HorizontalAlignment="Stretch" Grid.Column="1" Orientation="Vertical" Margin="10 0 0 0">
+                    <Grid Margin="0 0 0 10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Mosási útmutató:" Width="{Binding Path=LabelWidth}" Margin="0 0 16 0"/>
+                        <TextBox Grid.Column="1" TabIndex="1000" Style="{DynamicResource TextBoxStyle1}" MinWidth="{Binding Path=InputMinWidth}" x:Name="productDescription" VerticalContentAlignment="Center" IsReadOnly="False"/>
+                    </Grid>
+                    <Grid Margin="0 0 0 10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Hossz:" Width="{Binding Path=LabelWidth}" Margin="0 0 16 0"/>
+                        <TextBox Grid.Column="1" TabIndex="1001" Style="{DynamicResource TextBoxStyle1}" MinWidth="{Binding Path=InputMinWidth}" x:Name="productLength" VerticalContentAlignment="Center" IsReadOnly="False"/>
+                    </Grid>
+                    <Grid Margin="0 0 0 10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Szélesség:" Width="{Binding Path=LabelWidth}" Margin="0 0 16 0"/>
+                        <TextBox Grid.Column="1" TabIndex="1002" Style="{DynamicResource TextBoxStyle1}" MinWidth="{Binding Path=InputMinWidth}" x:Name="productWidth" VerticalContentAlignment="Center" IsReadOnly="False"/>
+                    </Grid>
+                    <Grid Margin="0 0 0 10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Szín:" Width="{Binding Path=LabelWidth}" Margin="0 0 16 0"/>
+                        <ComboBox Grid.Column="1" TabIndex="1003" ItemContainerStyle="{DynamicResource ComboBoxItemContainerStyle1}" Padding="8" Style="{DynamicResource ComboBoxStyle1}" x:Name="productColor" MinWidth="{Binding Path=InputMinWidth}" ItemsSource="{Binding Path=Colors}" DisplayMemberPath="Name" />
+                    </Grid>
+                    <Grid x:Name="productAvailableColors" Margin="0 0 0 10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Kapható színek:" Width="{Binding Path=LabelWidth}" Margin="0 0 16 0"/>
+                        <ItemsControl Grid.Column="1" IsTabStop="False" ItemsSource="{Binding Path=AvailableColors}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="3" MinWidth="{Binding Path=InputMinWidth}" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding Checked}" TabIndex="1004" Content="{Binding Name}" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" >
+                                        <CheckBox.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="4" />
+                                            </Style>
+                                        </CheckBox.Resources>
+                                    </CheckBox>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                    <Label Content="Hossz:" Width="130" Margin="0 0 16 0"/>
-                    <TextBox TabIndex="1001" Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productLength" VerticalContentAlignment="Center" IsReadOnly="False"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                    <Label Content="Szélesség:" Width="130" Margin="0 0 16 0"/>
-                    <TextBox TabIndex="1002" Style="{DynamicResource TextBoxStyle1}" Width="300" x:Name="productWidth" VerticalContentAlignment="Center" IsReadOnly="False"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                    <Label Content="Szín:" Width="130" Margin="0 0 16 0"/>
-                    <ComboBox TabIndex="1003" ItemContainerStyle="{DynamicResource ComboBoxItemContainerStyle1}" Padding="8" Style="{DynamicResource ComboBoxStyle1}" x:Name="productColor" Width="300" ItemsSource="{Binding Path=Colors}" DisplayMemberPath="Name" />
-                </StackPanel>
-                <StackPanel x:Name="productAvailableColors" Orientation="Horizontal" Margin="0 0 0 10">
-                    <Label Content="Kapható színek:" Width="130" Margin="0 0 16 0"/>
-                    <ItemsControl IsTabStop="False" ItemsSource="{Binding Path=AvailableColors}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <UniformGrid Columns="3" Width="300" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <CheckBox IsChecked="{Binding Checked}" TabIndex="1004" Content="{Binding Name}" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" >
-                                    <CheckBox.Resources>
-                                        <Style TargetType="{x:Type Border}">
-                                            <Setter Property="CornerRadius" Value="4" />
-                                        </Style>
-                                    </CheckBox.Resources>
-                                </CheckBox>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </StackPanel>
-            </StackPanel>
+            </Grid>
         </DockPanel>
     </Grid>
 </Window>

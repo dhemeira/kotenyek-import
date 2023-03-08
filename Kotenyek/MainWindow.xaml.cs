@@ -28,6 +28,7 @@ namespace Kotenyek
         readonly MainView mainView = new();
         static readonly HttpClient client = new();
         object Spinner { get; set; }
+        string images;
 
         public static bool IsUserNotLoggedIn => string.IsNullOrWhiteSpace(Properties.Settings.Default.AuthToken) || string.IsNullOrWhiteSpace(Properties.Settings.Default.SiteURL);
 
@@ -36,6 +37,7 @@ namespace Kotenyek
             InitializeComponent();          
             DataContext = mainView;
             mainView.ImageURL = "";
+            images = "";
             this.Spinner = imageUploadBT.Content;
         }
 
@@ -111,14 +113,17 @@ namespace Kotenyek
             if (response != null)
             {
                 var responseContent = await response.Content.ReadAsStringAsync();
-                var imageUrl = responseContent.Split(',')[3].Split('"')[5];
+                var imageUrl = System.Text.RegularExpressions.Regex.Unescape(responseContent.Split(',')[3].Split('"')[5]);
                 if (mainView.ImageURL == "")
                 {
-                    mainView.ImageURL = System.Text.RegularExpressions.Regex.Unescape(imageUrl);
+                    images = imageUrl;
+                    mainView.ImageURL = Path.GetFileName(imageUrl);
+
                 }
                 else
                 {
-                    mainView.ImageURL += "," + System.Text.RegularExpressions.Regex.Unescape(imageUrl);
+                    images += "," + imageUrl;
+                    mainView.ImageURL += ", " + Path.GetFileName(imageUrl);
                 }
             }
         }
@@ -226,7 +231,7 @@ namespace Kotenyek
                             width,
                             price,
                             string.Join(", ", checkedCategories),
-                            mainView.ImageURL,
+                            images,
                             productColor.Text,
                             string.Join(", ", checkedColors),
                             productUID.Text.ToUpper()));
@@ -254,6 +259,7 @@ namespace Kotenyek
                 }
                 checkedCategories.Clear();
                 mainView.ImageURL = "";
+                images = "";
                 productColor.Text = "";
                 foreach (var color in mainView.AvailableColors)
                 {
@@ -302,6 +308,7 @@ namespace Kotenyek
             {
                 productName.Text = "";
                 mainView.ImageURL = "";
+                images = "";
                 productColor.Text = "";
                 productUID.Text = "";
             }

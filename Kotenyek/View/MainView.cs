@@ -20,6 +20,8 @@ namespace Kotenyek.View
             }
         }
         public string ImageCount => $"Képek ({(ImageURL == "" ? 0 : ImageURL.Split(',').Length)}):";
+        public static int LabelWidth => 110;
+        public static int InputMinWidth => 300;
 
         public MainView()
         {            
