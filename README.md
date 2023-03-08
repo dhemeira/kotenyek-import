@@ -3,6 +3,8 @@
 A bekezdésekhez gyors elérési linkeket itt találod:
 ![Tartalom táblázat kép](https://github.com/dhemeira/kotenyek-import/blob/master/readme_images/tableofcontents.png?raw=true)
 
+Első használat előtt javasolt végigolvasni ezen útmutatót, és később felmerülő kérdés esetén újra elolvasni a kérdésre vonatkozó részt.
+
 ### Bejelentkezés
 
 ![Bejelentkezés kép](https://github.com/dhemeira/kotenyek-import/blob/master/readme_images/bejelentkezes.png?raw=true)
@@ -142,16 +144,53 @@ A termék összes kapható szín variációja. Ha a listán nem található szí
 
 ### Hozzáadás és Új szín
 
-Ennek a gombnak a megnyovásával hozzáadod az aktuális terméket a listához. Emellett a program előkészíti a szövegmezőket a termék következő színének felviteléhez
+Ennek a gombnak a megnyovásával hozzáadod az aktuális terméket a listához. Emellett a program előkészíti a szövegmezőket a termék következő színének felviteléhez.
 
-### Hozzáadás és új termék
+- Ha mégsem új színt szeretnél megadni hanem egy teljesen új terméket, akkor csak egyszerűen változtasd meg a szövegmezőkben maradt adatokat tetszés szerint
+- Ez a gomb a `Hozzáadás és Új termék` gombtól annyiban tér el, hogy nem üríti ki az összes szövegmezőt, csak azokat amik színenként is eltérnek. Ezen kívül semmi eltérés nincs a kettő között!
+- **Figyelem**: Ez a gomb nem menti el a terméket, csak felveszi a mentésre kész termékek listájára. `Import fájl mentése` nélküli kilépés esetén ezek törlődnek!
+
+### Hozzáadás és Új termék
+
+Ennek a gombnak a megnyovásával hozzáadod az aktuális terméket a listához. Emellett a program előkészíti a szövegmezőket a következő termék felvitelére.
+
+- Ha mégsem új terméket szeretnél feltölteni hanem egy új színt, akkor csak egyszerűen add meg az új színű termékhez tartozó adatokat.
+- Ez a gomb a `Hozzáadás és Új szín` gombtól annyiban tér el, hogy kiüríti az összes szövegmezőt. Ezen kívül semmi eltérés nincs a kettő között!
+- **Figyelem**: Ez a gomb nem menti el a terméket, csak felveszi a mentésre kész termékek listájára. `Import fájl mentése` nélküli kilépés esetén ezek törlődnek!
 
 ### Import fájl mentése
 
+Ez a gomb felel a termékek fájlba mentésére.
+Egyszerűen válaszd ki a mentés helyét a felugró ablakban, és add meg a fájl nevét.
+**Az oldalra feltöltés előtt ellenőrizd a generált .csv fájl tartalmát!** Ehhez segítséget a leírás végén vagy [ide kattintva](#az-import-fájl-csv-fájl-kinézete-speciális-karakterek-jelölése) kaphatsz.
+
 ### Kijelentkezés
+
+Ezzel a gombbal kijelentkezel a fiókodból. Ezt csak akkor érdemes használni, ha felhasználói fiókot szeretnél váltani.
+
+Az alkalmazás használata után **NEM** szükséges kilépni.
+
+Ha véletlenül kiléptél és mentetlen termékeid vannak, próbálj meg bejelentkezni, ameddig nem zárod be az alkalmazást, addig nagy eséllyel megmaradnak a termékek!
+
+## A kész import fájl feltöltésének módja
+
+`WIP`
 
 ## Példák
 
+`WIP`
+
 ## Hibák és hibaüzenetek
 
+`WIP`
+
 ## Az import fájl (.csv fájl) kinézete, speciális karakterek jelölése
+
+`WIP`
+
+`<sup>2</sup>`
+`\n`
+| Minta | Táblázat |
+| ----------- | ----------- |
+| első | sor |
+| második | sor |
