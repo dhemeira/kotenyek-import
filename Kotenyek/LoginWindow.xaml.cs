@@ -7,6 +7,7 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using System.Collections.Specialized;
 using System.Windows.Controls;
+using System;
 
 namespace Kotenyek
 {
@@ -15,6 +16,9 @@ namespace Kotenyek
     /// </summary>
     public partial class LoginWindow : Window
     {
+        string lastUser = "";
+        string lastUrl = "";
+        int attemptsWithSameName = 1;
         public LoginWindow()
         {
             InitializeComponent();         
@@ -40,7 +44,7 @@ namespace Kotenyek
             {
                 ShowMessage("Hibás oldal URL!", "Hiba");
                 return;
-            }
+            }          
 
             var client = new HttpClient();
             var request = new HttpRequestMessage(HttpMethod.Post, $"{siteURL}/wp-json/jwt-auth/v1/token")
@@ -51,7 +55,7 @@ namespace Kotenyek
             try
             {
                 var response = await client.SendAsync(request);
-                await HandleResponse(response, siteURL);    
+                await HandleResponse(response, siteURL);
             }
             catch (System.Exception)
             {
@@ -82,7 +86,29 @@ namespace Kotenyek
                     ShowMessage("Az oldal jelenleg nem elérhető, próbáld újra később!", "Hiba");
                     break;
                 case System.Net.HttpStatusCode.Forbidden:
-                    ShowMessage("Hibás adatok!", "Hiba");
+                    if (lastUser == siteUsernameTB.Text && lastUrl == siteURL)
+                    {
+                        attemptsWithSameName++;
+                    }
+                    else
+                    {
+                        lastUser = siteUsernameTB.Text;
+                        lastUrl = siteURL;
+                        attemptsWithSameName = 1;
+                    }
+                    DateTime dateTime = DateTime.Now;
+                    if (attemptsWithSameName >= 3 || Properties.Settings.Default.LastFailedAttempt.AddMinutes(10) >= dateTime)
+                    {
+                        if (Properties.Settings.Default.LastFailedAttempt.AddMinutes(10) < dateTime)
+                        {
+                            Properties.Settings.Default.LastFailedAttempt = DateTime.Now;
+                            Properties.Settings.Default.Save();
+                        }
+                        ShowMessage($"Túl sok hibás próbálkozás, próbáld újra {10 - dateTime.Subtract(Properties.Settings.Default.LastFailedAttempt).Minutes} perc múlva!", "Hiba");
+                    } else
+                    {
+                        ShowMessage("Hibás adatok!", "Hiba");
+                    }                 
                     break;
                 default:
                     ShowMessage("Ismeretlen hiba!", "Hiba");

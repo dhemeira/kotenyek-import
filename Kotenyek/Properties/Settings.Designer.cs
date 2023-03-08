@@ -57,5 +57,16 @@ namespace Kotenyek.Properties {
                 this["Sites"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime LastFailedAttempt {
+            get {
+                return ((global::System.DateTime)(this["LastFailedAttempt"]));
+            }
+            set {
+                this["LastFailedAttempt"] = value;
+            }
+        }
     }
 }
