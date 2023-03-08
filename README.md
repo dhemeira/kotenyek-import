@@ -194,3 +194,7 @@ Ha véletlenül kiléptél és mentetlen termékeid vannak, próbálj meg bejele
 | ----------- | ----------- |
 | első | sor |
 | második | sor |
+
+---
+
+Ha úgy érzed valami információ hiányzik, jelezd!
