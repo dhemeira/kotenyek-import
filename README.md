@@ -10,22 +10,24 @@ A bekezdésekhez gyors elérési linkeket itt találod:
 Az alkalmazás első megnyitásakor, vagy ha nem vagy bejelentkezve ez az ablak fogad.
 Nem szükséges minden megnyitáskor bejelentkezni abban az esetben, ha használat után csak bezárod az oldalt és nem jelentkezel ki.
 
-- Először add meg az **Oldal URL**-jét, vagy más névet linkjét.
-  - Ennek az ajánlott formája a következő: **weboldal.hu**
+- Először add meg az _`Oldal URL`_-jét, vagy más névet linkjét.
+  - Ennek az ajánlott formája a következő: `weboldal.hu`
   - Ennek 2 módja van:
-    1. csak egyszerűen írd be vagy másold be a szövegmezőbe
-    2. a legördülő listából válaszd ki a már előzetesen megadott linket
-  - Ha csak egyszerűen kimásolnád, akkor a https://weboldal.hu/ formátum is támogatva van
+    <ol type="1">
+      <li>csak egyszerűen írd be vagy másold be a szövegmezőbe</li>
+      <li>a legördülő listából válaszd ki a már előzetesen megadott linket</li>
+    </ol>
+  - Ha csak egyszerűen kimásolnád, akkor a `https://weboldal.hu/` formátum is támogatva van
   - Jelenleg csak .hu vagy .com használata lehetséges
-- Ezután add meg az oldalon is használt **felhasználóneved**
-- Majd az oldalon is használt **jelszavad**
-- Legvégül nyomj rá a **"Bejelentkezés"** gombra
+- Ezután add meg az oldalon is használt _`felhasználóneved`_
+- Majd az oldalon is használt _`jelszavad`_
+- Legvégül nyomj rá a `Bejelentkezés` gombra
 
 **Használat után _nem_ szükséges kijelentkezni!**
 
 Ha mindent helyesen adtál meg és az oldal is megfelelően működik, akkor sikeresen bejelentkeztél, és ez az ablak bezáródik.
 
-Ha valamit hibásan adtál meg, vagy a szerverrel nem vehető fel a kapcsolat, akkor erről egy hibaüzenet értesít. Ha a hibaüzenet szövege **"Ismeretlen hiba"**, akkor ezt rögtön jelezd, ellenkező esetben módosítsd az adatokat a hibaüzenetnek megfelelően.
+Ha valamit hibásan adtál meg, vagy a szerverrel nem vehető fel a kapcsolat, akkor erről egy hibaüzenet értesít. Ha a hibaüzenet szövege `Ismeretlen hiba`, akkor ezt rögtön jelezd, ellenkező esetben módosítsd az adatokat a hibaüzenetnek megfelelően.
 
 **Ha háromszor hibásan adod meg a jelszavad, az oldal 10 percig nem enged újrapróbálkozni.**
 
@@ -37,7 +39,7 @@ A felléphető hibákról, hibaüzenetekről a [Hibák és hibaüzenetek](#hibak
 
 Sikeres bejelentkezést követően ez az ablak fogad.
 
-A termékek hozzáadás utáni szerkesztése **CSAK A MENTETT .CSV FÁJLBAN vagy feltöltés után az oldalon lehetséges**, ezért győződj meg róla, hogy mindent megfelelően töltöttél ki, mielőtt hozzáadnád a terméket.
+A termékek hozzáadás utáni szerkesztése **CSAK A MENTETT `.CSV` FÁJLBAN vagy feltöltés után az oldalon lehetséges**, ezért győződj meg róla, hogy mindent megfelelően töltöttél ki, mielőtt hozzáadnád a terméket.
 
 A piros csillaggal jelölt mezők kitöltése kötelező, a többi a termék típusától függően ajánlott.
 
@@ -47,7 +49,7 @@ Kép hozzáadása **nem** kötelező.
 
 A kép mező nem szerkezthető, hibázási lehetőségek elkerülése érdekében. Emiatt győződj meg róla hogy a **megfelelő képet választod ki**.
 
-Kép feltöltésére A **"Képek feltöltése"** gomb szolgál. Itt egyszerre 1 vagy akár több kép is megadható. A termék listához adása előtt további képek is feltölthetők az adott termékhez.
+Kép feltöltésére A **`Képek feltöltése`** gomb szolgál. Itt egyszerre 1 vagy akár több kép is megadható. A termék listához adása előtt további képek is feltölthetők az adott termékhez.
 
 **FONTOS:** A kép feltöltődik a weboldalra abban a pillanatban amint hozzáadod a képet, akkor is, ha végül nem töltöd fel a terméket az oldalra. Emiatt csak olyan képeket válassz, amit biztosan fel szeretnél tölteni az oldalra.
 
