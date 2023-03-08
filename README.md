@@ -43,6 +43,10 @@ A termékek hozzáadás utáni szerkesztése **CSAK A MENTETT `.CSV` FÁJLBAN va
 
 A piros csillaggal jelölt mezők kitöltése kötelező, a többi a termék típusától függően ajánlott.
 
+<b style="color:red">
+HA NEM MENTED AZ IMPORT FÁJLT A PROGRAM BEZÁRÁSA ELŐTT, AKKOR MINDEN EDDIG FELVITT ADAT ELVESZIK!
+</b>
+
 ### Képek
 
 Kép hozzáadása **nem** kötelező.
@@ -53,7 +57,7 @@ Kép feltöltésére A **`Képek feltöltése`** gomb szolgál. Itt egyszerre 1 
 
 **FONTOS:** A kép feltöltődik a weboldalra abban a pillanatban amint hozzáadod a képet, akkor is, ha végül nem töltöd fel a terméket az oldalra. Emiatt csak olyan képeket válassz, amit biztosan fel szeretnél tölteni az oldalra.
 
-(Ha véletlenül mégis feltöltöttél egy képet amit nem akartál, akkor az sehol sem jelenik meg az oldalon autómatikusan, és az oldal adminfelületén törölhető a kép.)
+(Ha véletlenül mégis feltöltöttél egy képet amit nem akartál, akkor az sehol sem jelenik meg az oldalon automatikusan, és az oldal adminfelületén törölhető a kép.)
 
 ### Név
 
@@ -84,7 +88,7 @@ A fent említett speciális karakterekről, jelölésekről részletesebben a le
 
 Ár megadása **kötelező**.
 
-A termék ára. **Csak** a szám értéket kell és szabad tartalmaznia, pénznemet **NEM**.
+A termék ára forintban megadva. **Csak** a szám értéket kell és szabad tartalmaznia, pénznemet **NEM**.
 
 példa:
 
@@ -94,25 +98,51 @@ példa:
 
 Kategória megadása **kötelező**.
 
+A megjelenő mezők közül pipáld be azokat, amikbe a termék tartozik.
+Ha egy olyan kategóriát választasz, ami egy másik kategória alkategóriája (pl. Derekas kötény a Kötény alkategóriája), akkor a szülő kategória automatikusan kiválasztásra kerül.
+
 ### Cikkszám
 
 Cikkszám megadása **kötelező**.
 
+A cikkszám egy tetszőleges számú betűket és számokat is tartalmazó jelölés.
+
+- A cikkszám nagybetűsen kerül mentésre, de erre nem kell külön odafigyelni, ha kisbetűsen adod meg, akkor átkonvertálódik
+- Ha meg van adva a termék színe és a kapható színek, a cikkszámnak kötelezően tartalmaznia kell a szín 3 betűs angol rövidítését a cikkszám végén
+  - például: `MINTA123BLK` vagy `MINTA123WHT`, ami nem más mint a minta kötény fekete vagy fehér színben
+  - ez azért fontos, mert a további elérhető színeket a cikkszám, a szín és a kapható színek információ hármas alapján generálja a rendszer. Ha ezek közül valamelyik hibásan van megadva, a termékhez kapcsolódó további színek is hibásan fognak megjelenni
+
 ---
 
-A további mezők kitöltése **nem** kötelező.
+A további mezők kitöltése **nem** kötelező:
 
 ### Mosási útmutató
 
+`WIP`
+
 ### Hossz
+
+A termék hossza centiméterben (cm) megadva. Mértékegységet odaírni nem kell és nem is szabad.
 
 ### Szélesség
 
+A termék szélessége centiméterben (cm) megadva. Mértékegységet odaírni nem kell és nem is szabad.
+
 ### Szín
+
+A termék színe. Ha a listán nem található színű terméket szeretnél hozzáadni, akkor előbb az oldalon létre kell hoznod a színt, ahol a `név` a szín neve, a `slug` pedig a szín 3 betűs angol rövidítése.
+
+Ha meg van adva kapható szín, akkor a színnek azok közül kell kiválasztásra kerülnie.
 
 ### Kapható színek
 
+A termék összes kapható szín variációja. Ha a listán nem található színt szeretnél hozzáadni, akkor előbb az oldalon létre kell hoznod a színt a kapható színek között, ahol a `név` a szín neve, a `slug` pedig a szín 3 betűs angol rövidítése.
+
+**Figyelem**: A kapható színek között szerepelnie kell az adott termék színének is.
+
 ### Hozzáadás és Új szín
+
+Ennek a gombnak a megnyovásával hozzáadod az aktuális terméket a listához. Emellett a program előkészíti a szövegmezőket a termék következő színének felviteléhez
 
 ### Hozzáadás és új termék
 
