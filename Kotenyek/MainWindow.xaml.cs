@@ -66,15 +66,10 @@ namespace Kotenyek
             {
                 while (!r.EndOfStream)
                 {
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-                    string[] s = r.ReadLine().Split(';');
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
+                    string[] s = r.ReadLine()!.Split(';');
                     mainView.WashingInstruction.Add(new Washes() { Name = s[0], Url = s[1] });
                 }
             }
-
-            mainView.WashingInstruction.Add(new Washes() { Name = "teszt", Url = "teszturl" });
-            mainView.WashingInstruction.Add(new Washes() { Name = "teszt2", Url = "teszt2url" });
 
             mainDockPanel.IsEnabled = true;
             loginSpinner.Visibility = Visibility.Hidden;
