@@ -120,7 +120,9 @@ A további mezők kitöltése **nem** kötelező:
 
 ### Mosási útmutató
 
-`WIP`
+A legördülő listából válaszd ki azt a mosási útmutatót, ami az adott termékre vonatkozik.
+
+Ha egy olyan útmutatót szeretnél a terméknek választani, ami nem szerepel a listát, jelezd. Előbb-utóbb minden verzió bekerül a listába, ezért nem szerkeszthető ez a lista a felhasználók számára.
 
 ### Hossz
 
@@ -174,26 +176,43 @@ Ha véletlenül kiléptél és mentetlen termékeid vannak, próbálj meg bejele
 
 ## A kész import fájl feltöltésének módja
 
-`WIP`
+Termékek > Minden termék > Importálás > Choose file-nál .csv fájl kiválasztása, Speciális beállítások megjelenítése, CSV elválasztónál `;` megadása, Folytatás > Importáló futtatása > Várd meg ameddig importálja a termékeket > Kész
 
-## Példák
-
-`WIP`
+`WIP` Képek feltöltése ha kész az admin felület
 
 ## Hibák és hibaüzenetek
 
-`WIP`
+Ha `Ismeretlen hiba` üzenettel találkozol, minél hamarabb jelezd! Fontos, hogy megjegyezd/feljegyezd mit csináltál, amikor a hiba megjelent és hogy milyen adatokat adtál meg, hogy újra elő lehessen állítani a hibát.
 
 ## Az import fájl (.csv fájl) kinézete, speciális karakterek jelölése
 
-`WIP`
+| Név                        | Rövid leírás                                                                           | Leírás                                                                                                                                                                                            | Hosszúság (cm) | Szélesség (cm) | Normál ár | Kategória                         | Képek                                                           | Attribute 1 name | Tulajdonság (1) értéke(i) | Attribute 1 global | Attribute 2 name | Tulajdonság (2) értéke(i) | Attribute 2 global | Cikkszám    |
+| -------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | -------------- | --------- | --------------------------------- | --------------------------------------------------------------- | ---------------- | ------------------------- | ------------------ | ---------------- | ------------------------- | ------------------ | ----------- |
+| `MINTA TERMÉK (CKSZM1BLK)` | `Több soros leírás\namik akár sortörést is tartalmazhatnak\nvagy hatványt<sup>2</sup>` | `Mostási útmutató:\n<img src="https://mintaoldal.hu/mosási-útmutató-link.png" title="Mosási útmutató" alt="Mosási útmutató" width="166" height="30" class="alignnone size-full wp-image-1186" />` | `100`          | `70`           | `1234`    | `Kötény > Derekas kötény, Kötény` | `https://mintaoldal.hu/kep1.png,https://mintaoldal.hu/kep2.png` | `Szín`           | `Fekete`                  | `1`                | `Kapható színek` | `Fehér, Fekete`           | `1`                | `CKSZM1BLK` |
+| `MINTA TERMÉK (CKSZM1WHT)` | `Több soros leírás\namik akár sortörést is tartalmazhatnak\nvagy hatványt<sup>2</sup>` | `Mostási útmutató:\n<img src="https://mintaoldal.hu/mosási-útmutató-link.png" title="Mosási útmutató" alt="Mosási útmutató" width="166" height="30" class="alignnone size-full wp-image-1186" />` | `100`          | `70`           | `1234`    | `Kötény > Derekas kötény, Kötény` | `https://mintaoldal.hu/kep3.png,https://mintaoldal.hu/kep4.jpg` | `Szín`           | `Fehér`                   | `1`                | `Kapható színek` | `Fehér, Fekete`           | `1`                | `CKSZM1WHT` |
 
-`<sup>2</sup>`
-`\n`
-| Minta | Táblázat |
-| ----------- | ----------- |
-| első | sor |
-| második | sor |
+- Egyes mezők neve nem egyezik meg a programban látható nevekkel. A .csv fájlban megjelenő mezők neveinek jelentése:
+
+  - `Név`: a termék neve
+  - `Rövid leírás`: a terméknél megjelenő leírás
+  - `Leírás`: ide kerül a mosási útmutató
+  - `Hosszúság (cm)`: a termék hossza
+  - `Szélesség (cm)`: a termék szélessége
+  - `Normál ár`: a termék ára
+  - `Kategória`: a termékhez tartozó minden kategória, vesszővel elválasztva
+  - `Képek`: a termék képei, vesszővel elválasztva
+  - `Attribute 1 name`: Ennek a mezőnek a `Szín` szót kell tartalmaznia
+  - `Tulajdonság (1) értéke(i)`: a termék színe
+  - `Attribute 1 global`: az `1`-es számot kell tartalmaznia
+  - `Attribute 2 name`: Ennek a mezőnek a `Kapható színek` szót kell tartalmaznia
+  - `Tulajdonság (2) értéke(i)`: a termékből kapható színek, vesszővel elválasztva
+  - `Attribute 2 global`: az `1`-es számot kell tartalmaznia
+  - `Cikkszám`: a termék cikkszáma nagybetűsen
+
+- `<sup>2</sup>`: hatványok jelölése, x<sup>2</sup> megfelelője a `x<sup>2</sup>`. A `<sup>` és `</sup>` közé bármi írható, pl.: `ez egy sima szöveg <sup>ez pedig egy hatványra emelt szöveg</sup>` eredménye: ez egy sima szöveg <sup>ez pedig egy hatványra emelt szöveg</sup>
+- `\n`: sortörések, minden `\n` egy `Enternek` feleltethető meg az oldalon megjelenő termék leírásában
+- a `Leírás`-nál megjelenő szöveggel ne foglalkozz, feltöltés után ellenőrizd, hogy megjelenik-e a mosási útmutató. Ha nem, akkor jelezd!
+- a kategóriában megjelen(het)nek `>` karakterek, ezek jelentése a következő: `Kategória > Alkategória`
 
 ---
 
