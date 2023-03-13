@@ -28,11 +28,13 @@ namespace Kotenyek.View
             _colors = new ObservableCollection<ColorsResponse>();
             _availableColors = new ObservableCollection<ColorsResponse>();
             _categories = new ObservableCollection<CategoriesResponse>();
+            _washingInstruction = new ObservableCollection<Washes>();
         }
 
         private ObservableCollection<ColorsResponse> _colors;
         private ObservableCollection<ColorsResponse> _availableColors;
         private ObservableCollection<CategoriesResponse> _categories;
+        private ObservableCollection<Washes> _washingInstruction;
 
         public ObservableCollection<ColorsResponse> Colors
         {
@@ -61,6 +63,16 @@ namespace Kotenyek.View
             {
                 _categories = value;
                 OnPropertyChanged(nameof(Categories));
+            }
+        }
+
+        public ObservableCollection<Washes> WashingInstruction
+        {
+            get { return _washingInstruction; }
+            set
+            {
+                _washingInstruction = value;
+                OnPropertyChanged(nameof(WashingInstruction));
             }
         }
 

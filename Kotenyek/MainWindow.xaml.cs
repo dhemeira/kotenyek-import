@@ -52,7 +52,7 @@ namespace Kotenyek
         }
 
         private async Task LoadAndEnable()
-        {         
+        {
             mainView.Categories.Clear();
             mainView.Colors.Clear();
             mainView.AvailableColors.Clear();
@@ -61,6 +61,20 @@ namespace Kotenyek
             await LoadDataToList(mainView.Colors, $"{Properties.Settings.Default.SiteURL}/wp-json/wc/v3/products/attributes/1/terms");
             this.Categories = mainView.Categories.ToList();
             this.Colors = mainView.Colors.ToList();
+
+            using (StreamReader r = new("Assets/washingInstructions.txt", Encoding.UTF8))
+            {
+                while (!r.EndOfStream)
+                {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+                    string[] s = r.ReadLine().Split(';');
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+                    mainView.WashingInstruction.Add(new Washes() { Name = s[0], Url = s[1] });
+                }
+            }
+
+            mainView.WashingInstruction.Add(new Washes() { Name = "teszt", Url = "teszturl" });
+            mainView.WashingInstruction.Add(new Washes() { Name = "teszt2", Url = "teszt2url" });
 
             mainDockPanel.IsEnabled = true;
             loginSpinner.Visibility = Visibility.Hidden;
@@ -224,9 +238,10 @@ namespace Kotenyek
             string errorList = CheckForErrors(out int length, out int width, out int price);
             if (string.IsNullOrEmpty(errorList))
             {
+                var washingInstruction = mainView.WashingInstruction.ToList().Find(x => x.Name == productDescription.Text) ?? new Washes() { Name = "", Url = "" };
                 Products.Add(new Product(productName.Text.ToUpper(),
                             productShortDescription.Text.Replace("\r", "").Replace("\n", "\\n"),
-                            (productDescription.Text != "" ? $"Mosási útmutató:\\n<img src=\"{productDescription.Text}\" alt=\"Mosási útmutató\" width=\"166\" height=\"30\" class=\"alignnone size-full wp-image-1186\"/>" : ""),
+                            (productDescription.Text != "" ? $"Mosási útmutató:\\n<img src=\"{washingInstruction.Url}\" title=\"{washingInstruction.Name}\" alt=\"Mosási útmutató\" width=\"166\" height=\"30\" class=\"alignnone size-full wp-image-1186\"/>" : ""),
                             length,
                             width,
                             price,
@@ -288,14 +303,41 @@ namespace Kotenyek
             };
             if (saveFileDialog.ShowDialog() == true)
             {
-                StreamWriter streamWriter = new(saveFileDialog.FileName, false, Encoding.UTF8);
-                streamWriter.WriteLine("Név;Rövid leírás;Leírás;Hosszúság (cm);Szélesség (cm);Normál ár;Kategória;Képek;Attribute 1 name;Tulajdonság (1) értéke(i);Attribute 1 global;Attribute 2 name;Tulajdonság (2) értéke(i);Attribute 2 global;Cikkszám");
-                foreach (var item in Products)
+                try
                 {
-                    streamWriter.WriteLine($"{item.Name};{item.ShortDescription};{item.Description};{(item.Length >= 0 ? item.Length : "")};{(item.Width >= 0 ? item.Width : "")};{item.Price};{item.Category};{item.Images};Szín;{item.Color};1;Kapható színek;{item.AvailableColors};1;{item.UID}");
+                    StreamWriter streamWriter = new(saveFileDialog.FileName, false, Encoding.UTF8);
+                    streamWriter.WriteLine("Név;Rövid leírás;Leírás;Hosszúság (cm);Szélesség (cm);Normál ár;Kategória;Képek;Attribute 1 name;Tulajdonság (1) értéke(i);Attribute 1 global;Attribute 2 name;Tulajdonság (2) értéke(i);Attribute 2 global;Cikkszám");
+                    foreach (var item in Products)
+                    {
+                        streamWriter.WriteLine($"{item.Name};{item.ShortDescription};{item.Description};{(item.Length >= 0 ? item.Length : "")};{(item.Width >= 0 ? item.Width : "")};{item.Price};{item.Category};{item.Images};Szín;{item.Color};1;Kapható színek;{item.AvailableColors};1;{item.UID}");
+                    }
+                    streamWriter.Close();
+                    Products.Clear();
+                    productName.Text = "";
+                    productShortDescription.Text = "";
+                    productDescription.Text = "";
+                    productLength.Text = "";
+                    productWidth.Text = "";
+                    productPrice.Text = "";
+                    foreach (var category in mainView.Categories)
+                    {
+                        category.Checked = false;
+                    }
+                    checkedCategories.Clear();
+                    mainView.ImageURL = "";
+                    images = "";
+                    productColor.Text = "";
+                    foreach (var color in mainView.AvailableColors)
+                    {
+                        color.Checked = false;
+                    }
+                    checkedColors.Clear();
+                    productUID.Text = "";
                 }
-                streamWriter.Close();
-                Products.Clear();
+                catch (System.Exception)
+                {
+                    Helpers.ShowMessage(this,"A fájl már használatban van! Zárd be mielőtt felülírnád!", "Import fájl mentése");
+                }                                          
             }
             mainDockPanel.IsEnabled = true;
             loginSpinner.Visibility = Visibility.Hidden;

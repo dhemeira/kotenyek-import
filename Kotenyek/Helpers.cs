@@ -98,6 +98,13 @@ namespace Kotenyek
         }
     }
 
+    public class Washes
+    {
+        public string? Name { get; set; }
+
+        public string? Url { get; set; }
+    }
+
     public class CategoriesResponse : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;

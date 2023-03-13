@@ -144,7 +144,7 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Content="Mosási útmutató:" Width="{Binding Path=LabelWidth}" Margin="0 0 16 0"/>
-                        <TextBox Grid.Column="1" TabIndex="1000" Style="{DynamicResource TextBoxStyle1}" MinWidth="{Binding Path=InputMinWidth}" x:Name="productDescription" VerticalContentAlignment="Center" IsReadOnly="False"/>
+                        <ComboBox Grid.Column="1" TabIndex="1000" ItemContainerStyle="{DynamicResource ComboBoxItemContainerStyle1}" Padding="8" Style="{DynamicResource ComboBoxStyle1}" x:Name="productDescription" MinWidth="{Binding Path=InputMinWidth}" ItemsSource="{Binding Path=WashingInstruction}" DisplayMemberPath="Name" />
                     </Grid>
                     <Grid Margin="0 0 0 10">
                         <Grid.ColumnDefinitions>
