@@ -184,19 +184,26 @@ namespace Kotenyek
 
             if (result == true)
             {
-                await ValidateToken();
-                foreach (var filename in fileDialog.FileNames)
+                try
                 {
-                    using var request = new HttpRequestMessage(HttpMethod.Post, $"{Properties.Settings.Default.SiteURL}/wp-json/wp/v2/media");
-                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.AuthToken);
-                    FileStream FS = new(filename, FileMode.Open, FileAccess.Read);
-                    request.Content = new StreamContent(FS);
-                    request.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
-                    var teszt = Path.GetFileName(filename);
-                    request.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = Path.GetFileName(filename)};
-                    var response = await client.SendAsync(request);
-                    await HandleResponse(response);
-                }              
+                    await ValidateToken();
+                    foreach (var filename in fileDialog.FileNames)
+                    {
+                        using var request = new HttpRequestMessage(HttpMethod.Post, $"{Properties.Settings.Default.SiteURL}/wp-json/wp/v2/media");
+                        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.AuthToken);
+                        FileStream FS = new(filename, FileMode.Open, FileAccess.Read);
+                        request.Content = new StreamContent(FS);
+                        request.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
+                        var teszt = Path.GetFileName(filename);
+                        request.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = Path.GetFileName(filename) };
+                        var response = await client.SendAsync(request);
+                        await HandleResponse(response);
+                    }
+                }
+                catch (System.Exception)
+                {
+                    Helpers.ShowMessage(this, "Ismeretlen hiba", "Képek feltöltése");
+                }                         
             }
             imageUploadBT.Content = "Képek feltöltése";
             imageUploadBT.IsEnabled = true;
